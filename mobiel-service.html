@@ -36,13 +36,14 @@
       transform: rotate(18deg); animation: liq-shimmer 8s ease-in-out infinite;
       pointer-events: none; z-index: 0;
     }
-    .liq-nav-link {
-      color: rgba(54,68,67,0.65); font-size: 12.5px; font-weight: 600;
+        .liq-nav-link {
+      color: rgba(255,255,255,0.82); font-size: 12.5px; font-weight: 600;
       letter-spacing: 0.07em; text-transform: uppercase; text-decoration: none;
       padding: 6px 12px; border-radius: 10px;
-      transition: background 0.2s ease, color 0.2s ease; position: relative; z-index: 1;
+      transition: background 0.2s ease, color 0.2s ease;
+      position: relative; z-index: 1;
     }
-    .liq-nav-link:hover { background: rgba(255,255,255,0.45); color: var(--dark); }
+    .liq-nav-link:hover { background: rgba(255,255,255,0.14); color: #fff; }
     .btn-primary {
       display: inline-flex; align-items: center; gap: 8px;
       background: var(--primary); color: #fff; padding: 14px 28px;
@@ -88,7 +89,7 @@
         +32 495 10 08 81</a>
       <!-- Hamburger (mobile only) -->
       <button id="ham-btn" aria-label="Menu openen" onclick="(function(){var m=document.getElementById('mob-nav');m.style.display=m.style.display==='none'?'block':'none';})()" style="display:none;flex-shrink:0;align-items:center;justify-content:center;background:transparent;border:none;padding:8px;border-radius:8px;cursor:pointer;position:relative;z-index:1;">
-        <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="var(--dark)" stroke-width="2.2" stroke-linecap="round">
+        <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="rgba(255,255,255,0.85)" stroke-width="2.2" stroke-linecap="round">
           <line x1="3" y1="6" x2="21" y2="6"/><line x1="3" y1="12" x2="21" y2="12"/><line x1="3" y1="18" x2="21" y2="18"/>
         </svg>
       </button>
