@@ -1,0 +1,186 @@
+<!DOCTYPE html>
+<html lang="nl">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Glasbraak verzekerd — Autoglas GT</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Archivo:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --primary: #38C7EA; --dark: #364443; --dark-deeper: #243030;
+      --bg: #D9E1E3; --surface: #fff; --muted: #6B8585;
+      --border: #C8D4D6; --primary-pale: rgba(56,199,234,0.1);
+      --shadow-lg: 0 20px 60px rgba(54,68,67,0.12), 0 4px 16px rgba(54,68,67,0.06);
+    }
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    body { font-family: 'Archivo', sans-serif; background: var(--bg); color: var(--dark); }
+    @keyframes liq-shimmer {
+      0%   { transform: translateX(-120%) rotate(18deg); opacity: 0; }
+      25%  { opacity: 1; } 75%  { opacity: 1; }
+      100% { transform: translateX(320%) rotate(18deg); opacity: 0; }
+    }
+    .liq-glass-pill {
+      background: linear-gradient(160deg, rgba(255,255,255,0.46) 0%, rgba(255,255,255,0.28) 60%, rgba(255,255,255,0.34) 100%);
+      backdrop-filter: blur(30px) saturate(190%) brightness(1.08);
+      -webkit-backdrop-filter: blur(30px) saturate(190%) brightness(1.08);
+      border: 1px solid rgba(255,255,255,0.75);
+      box-shadow: 0 2px 0 rgba(255,255,255,0.95) inset, 0 -1px 0 rgba(255,255,255,0.20) inset, 1px 0 0 rgba(255,255,255,0.45) inset, -1px 0 0 rgba(255,255,255,0.45) inset, 0 10px 40px rgba(54,68,67,0.12), 0 2px 10px rgba(54,68,67,0.07);
+      position: relative; overflow: hidden; border-radius: 22px;
+    }
+    .liq-glass-pill::before {
+      content: ''; position: absolute; top: -50%; left: -30%;
+      width: 36%; height: 200%;
+      background: linear-gradient(to right, transparent, rgba(255,255,255,0.25), transparent);
+      transform: rotate(18deg); animation: liq-shimmer 8s ease-in-out infinite;
+      pointer-events: none; z-index: 0;
+    }
+    .liq-nav-link {
+      color: rgba(54,68,67,0.65); font-size: 12.5px; font-weight: 600;
+      letter-spacing: 0.07em; text-transform: uppercase; text-decoration: none;
+      padding: 6px 12px; border-radius: 10px;
+      transition: background 0.2s ease, color 0.2s ease; position: relative; z-index: 1;
+    }
+    .liq-nav-link:hover { background: rgba(255,255,255,0.45); color: var(--dark); }
+    .btn-primary {
+      display: inline-flex; align-items: center; gap: 8px;
+      background: var(--primary); color: #fff; padding: 14px 28px;
+      font-weight: 700; font-size: 13px; text-transform: uppercase; letter-spacing: 0.1em;
+      text-decoration: none; border: none; cursor: pointer; transition: opacity 0.2s ease; border-radius: 0;
+    }
+    .btn-primary:hover { opacity: 0.88; }
+    .section-label {
+      display: inline-block; font-size: 11px; font-weight: 700;
+      letter-spacing: 0.14em; text-transform: uppercase; color: var(--primary);
+      background: var(--primary-pale); padding: 5px 12px; border-radius: 2px; margin-bottom: 12px;
+    }
+  </style>
+</head>
+<body>
+
+<header style="position:fixed;top:12px;left:16px;right:16px;z-index:100;border-radius:22px;">
+  <div class="liq-glass-pill">
+    <div style="max-width:1280px;margin:0 auto;padding:0 24px;height:78px;display:flex;align-items:center;justify-content:space-between;gap:20px;position:relative;z-index:1;">
+      <a href="index.html" style="text-decoration:none;display:flex;align-items:center;flex-shrink:0;">
+        <img src="Logo_Autoglasgt.jpg" alt="Autoglas GT" style="height:58px;width:auto;display:block;border-radius:6px;">
+      </a>
+      <nav style="display:flex;align-items:center;gap:4px;">
+        <a href="index.html#diensten" class="liq-nav-link">Diensten</a>
+        <a href="index.html#over-ons" class="liq-nav-link">Over ons</a>
+        <a href="index.html#werkwijze" class="liq-nav-link">Werkwijze</a>
+        <a href="index.html#contact" class="liq-nav-link">Contact</a>
+      </nav>
+      <a href="tel:+32495100881" style="display:inline-flex;align-items:center;gap:7px;background:var(--primary);color:#fff;padding:8px 16px;font-size:12.5px;font-weight:700;letter-spacing:0.06em;text-decoration:none;border-radius:10px;flex-shrink:0;position:relative;z-index:1;transition:opacity 0.2s;" onmouseover="this.style.opacity='0.85'" onmouseout="this.style.opacity='1'">
+        <svg width="13" height="13" fill="currentColor" viewBox="0 0 20 20"><path d="M2 3a1 1 0 011-1h2.153a1 1 0 01.986.836l.74 4.435a1 1 0 01-.54 1.06l-1.548.773a11.037 11.037 0 006.105 6.105l.774-1.548a1 1 0 011.059-.54l4.435.74a1 1 0 01.836.986V17a1 1 0 01-1 1h-2C7.82 18 2 12.18 2 5V3z"/></svg>
+        +32 495 10 08 81
+      </a>
+    </div>
+  </div>
+</header>
+
+<section style="padding:160px 0 80px;background:var(--dark);position:relative;overflow:hidden;">
+  <div style="position:absolute;inset:0;opacity:0.04;background-image:repeating-linear-gradient(45deg,transparent,transparent 2px,#fff 2px,#fff 4px);"></div>
+  <div style="position:absolute;bottom:0;left:0;right:0;height:3px;background:linear-gradient(to right,transparent,var(--primary),transparent);opacity:0.5;"></div>
+  <div style="max-width:1280px;margin:0 auto;padding:0 28px;position:relative;z-index:2;">
+    <a href="index.html#diensten" style="display:inline-flex;align-items:center;gap:6px;color:rgba(255,255,255,0.5);font-size:13px;text-decoration:none;margin-bottom:28px;transition:color 0.2s;" onmouseover="this.style.color='var(--primary)'" onmouseout="this.style.color='rgba(255,255,255,0.5)'">
+      <svg width="14" height="14" fill="none" stroke="currentColor" stroke-width="2.2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M15 19l-7-7 7-7"/></svg>
+      Terug naar diensten
+    </a>
+    <span class="section-label">Dienst</span>
+    <h1 style="color:#fff;font-weight:900;font-size:clamp(2.4rem,5vw,4rem);line-height:1.0;letter-spacing:-0.03em;margin:8px 0 20px;">Glasbraak<br><span style="color:var(--primary);">verzekerd</span></h1>
+    <p style="color:rgba(255,255,255,0.55);font-size:17px;line-height:1.75;max-width:560px;">
+      Bent u verzekerd? Dan hoeft u niets te betalen. Autoglas GT regelt alles voor u.
+    </p>
+  </div>
+</section>
+
+<section style="padding:80px 0;background:var(--surface);">
+  <div style="max-width:1280px;margin:0 auto;padding:0 28px;display:grid;grid-template-columns:1fr 1fr;gap:80px;align-items:start;">
+    <div>
+      <h2 style="color:var(--dark);font-weight:800;font-size:clamp(1.6rem,2.5vw,2.2rem);letter-spacing:-0.02em;margin-bottom:20px;">U betaalt niets — wij regelen alles</h2>
+      <p style="color:var(--muted);line-height:1.8;font-size:15px;margin-bottom:20px;">
+        Autoglas GT is erkend door de verzekeringsmaatschappijen. Bent u verzekerd, dan moet u niets betalen. Alles wordt voor u geregeld met uw makelaar of verzekeringsmaatschappij.
+      </p>
+      <p style="color:var(--muted);line-height:1.8;font-size:15px;margin-bottom:32px;">
+        Wij nemen het administratieve werk volledig van u over: het indienen van het dossier, de communicatie met uw verzekeraar en de opvolging. U hoeft zich nergens druk over te maken.
+      </p>
+
+      <h3 style="color:var(--dark);font-weight:700;font-size:16px;margin-bottom:16px;">Erkend door</h3>
+      <div style="display:flex;flex-wrap:wrap;gap:8px;margin-bottom:36px;">
+        <span style="background:var(--bg);border:1.5px solid var(--border);color:var(--dark);padding:8px 16px;font-size:13px;font-weight:600;border-radius:2px;">AG Insurance</span>
+        <span style="background:var(--bg);border:1.5px solid var(--border);color:var(--dark);padding:8px 16px;font-size:13px;font-weight:600;border-radius:2px;">Ethias</span>
+        <span style="background:var(--bg);border:1.5px solid var(--border);color:var(--dark);padding:8px 16px;font-size:13px;font-weight:600;border-radius:2px;">Vivium</span>
+        <span style="background:var(--bg);border:1.5px solid var(--border);color:var(--dark);padding:8px 16px;font-size:13px;font-weight:600;border-radius:2px;">AXA</span>
+        <span style="background:var(--bg);border:1.5px solid var(--border);color:var(--dark);padding:8px 16px;font-size:13px;font-weight:600;border-radius:2px;">+ meer</span>
+      </div>
+
+      <a href="tel:+32495100881" class="btn-primary">
+        <svg width="15" height="15" fill="currentColor" viewBox="0 0 20 20"><path d="M2 3a1 1 0 011-1h2.153a1 1 0 01.986.836l.74 4.435a1 1 0 01-.54 1.06l-1.548.773a11.037 11.037 0 006.105 6.105l.774-1.548a1 1 0 011.059-.54l4.435.74a1 1 0 01.836.986V17a1 1 0 01-1 1h-2C7.82 18 2 12.18 2 5V3z"/></svg>
+        +32 495 10 08 81
+      </a>
+    </div>
+
+    <div style="display:flex;flex-direction:column;gap:20px;">
+      <div style="position:relative;width:100%;height:680px;overflow:hidden;display:flex;align-items:center;justify-content:center;user-select:none;">
+        <div style="position:absolute;left:0;top:50%;transform:translateY(-50%);text-align:center;pointer-events:none;z-index:10;">
+          <div class="stk-cur" style="font-size:1.9rem;font-weight:300;color:var(--dark);line-height:1;font-variant-numeric:tabular-nums;">01</div>
+          <div style="width:24px;height:1px;background:rgba(54,68,67,0.15);margin:7px auto;"></div>
+          <div class="stk-tot" style="font-size:12px;color:var(--muted);font-variant-numeric:tabular-nums;"></div>
+        </div>
+        <div class="stk-stage" style="position:relative;width:620px;height:560px;perspective:1200px;cursor:grab;flex-shrink:0;z-index:5;"></div>
+        <div class="stk-dots" style="position:absolute;right:0;top:50%;transform:translateY(-50%);display:flex;flex-direction:column;gap:8px;align-items:center;z-index:10;"></div>
+        <script>!function(){var w=document.currentScript.parentElement,stage=w.querySelector('.stk-stage'),dotsEl=w.querySelector('.stk-dots'),cur=w.querySelector('.stk-cur'),tot=w.querySelector('.stk-tot');var IMGS=[{src:'https://placehold.co/720x450/364443/38C7EA?text=Glasbraak+verzekerd',alt:'Glasbraak verzekerd'},{src:'https://placehold.co/720x450/D9E1E3/364443?text=Erkend+verzekeraar',alt:'Erkend verzekeraar'}];var n=IMGS.length,c=0,busy=false;IMGS.forEach(function(im,i){var d=document.createElement('div');d.className='stk-card';d.style.cssText='position:absolute;top:50%;left:50%;width:600px;height:540px;margin:-270px 0 0 -300px;border-radius:14px;overflow:hidden;box-shadow:0 16px 48px rgba(54,68,67,0.14),0 4px 12px rgba(54,68,67,0.08);transition:transform 0.44s cubic-bezier(0.34,1.15,0.64,1),opacity 0.44s ease;will-change:transform,opacity;';var img=document.createElement('img');img.src=im.src;img.alt=im.alt;img.style.cssText='width:100%;height:100%;object-fit:cover;display:block;pointer-events:none;-webkit-user-drag:none;';var g=document.createElement('div');g.style.cssText='position:absolute;inset:0;background:linear-gradient(160deg,rgba(255,255,255,0.06) 0%,transparent 50%,rgba(54,68,67,0.15) 100%);pointer-events:none;';d.appendChild(img);d.appendChild(g);stage.appendChild(d);var b=document.createElement('button');b.style.cssText='width:8px;border-radius:4px;border:none;padding:0;cursor:pointer;transition:height .3s ease,background .3s ease;outline:none;';b.setAttribute('aria-label','Afbeelding '+(i+1));b.onclick=function(){go(i);};dotsEl.appendChild(b);});var cards=[...stage.querySelectorAll('.stk-card')],btns=[...dotsEl.querySelectorAll('button')];tot.textContent=String(n).padStart(2,'0');function p(i){var d=i-c;if(d>n/2)d-=n;if(d<-n/2)d+=n;if(d===0)return{y:0,s:1,o:1,rx:0,z:5};if(d===-1)return{y:-185,s:.83,o:.58,rx:9,z:4};if(d===-2)return{y:-315,s:.68,o:.25,rx:16,z:3};if(d===1)return{y:185,s:.83,o:.58,rx:-9,z:4};if(d===2)return{y:315,s:.68,o:.25,rx:-16,z:3};return{y:d>0?500:-500,s:.5,o:0,rx:d>0?-22:22,z:0};}function upd(){cards.forEach(function(el,i){var v=p(i);el.style.transform='translateY('+v.y+'px) scale('+v.s+') rotateX('+v.rx+'deg)';el.style.opacity=v.o;el.style.zIndex=v.z;});btns.forEach(function(b,i){b.style.height=i===c?'24px':'8px';b.style.background=i===c?'var(--dark)':'rgba(54,68,67,0.22)';});cur.textContent=String(c+1).padStart(2,'0');}function go(x){c=((x%n)+n)%n;upd();}function nav(d){if(busy)return;busy=true;setTimeout(function(){busy=false;},440);go(c+d);}var sy=0,drag=false;stage.addEventListener('mousedown',function(e){sy=e.clientY;drag=true;stage.style.cursor='grabbing';e.preventDefault();});window.addEventListener('mouseup',function(e){if(!drag)return;drag=false;stage.style.cursor='grab';if(Math.abs(e.clientY-sy)>45)nav(e.clientY<sy?1:-1);});stage.addEventListener('touchstart',function(e){sy=e.touches[0].clientY;},{passive:true});stage.addEventListener('touchend',function(e){var dy=e.changedTouches[0].clientY-sy;if(Math.abs(dy)>45)nav(dy<0?1:-1);});stage.addEventListener('wheel',function(e){e.preventDefault();nav(e.deltaY>0?1:-1);},{passive:false});upd();}();</script>
+      </div>
+      <div style="background:var(--bg);border:1.5px solid var(--border);border-radius:4px;padding:24px;">
+        <div style="font-weight:700;font-size:14px;color:var(--dark);margin-bottom:8px;">Hoe werkt het?</div>
+        <ol style="color:var(--muted);font-size:13px;line-height:1.8;padding-left:16px;">
+          <li>Contacteer ons en omschrijf de schade</li>
+          <li>Wij regelen het dossier met uw verzekeraar</li>
+          <li>Afspraak plannen voor herstelling of vervanging</li>
+          <li>U rijdt weg — zonder factuur</li>
+        </ol>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section style="padding:80px 0;background:var(--bg);">
+  <div style="max-width:1280px;margin:0 auto;padding:0 28px;">
+    <h2 style="color:var(--dark);font-weight:800;font-size:22px;margin-bottom:32px;">Andere diensten</h2>
+    <div style="display:grid;grid-template-columns:repeat(3,1fr);gap:16px;">
+      <a href="voorruit-vervangen.html" style="background:var(--surface);padding:24px;border-radius:4px;border:1.5px solid var(--border);text-decoration:none;transition:border-color 0.2s;" onmouseover="this.style.borderColor='var(--primary)'" onmouseout="this.style.borderColor='var(--border)'">
+        <div style="color:var(--dark);font-weight:700;font-size:15px;margin-bottom:6px;">Voorruit vervangen</div>
+        <div style="color:var(--muted);font-size:13px;line-height:1.6;">Snel en vakkundig met kwaliteitsruiten.</div>
+      </a>
+      <a href="steenslag-herstellen.html" style="background:var(--surface);padding:24px;border-radius:4px;border:1.5px solid var(--border);text-decoration:none;transition:border-color 0.2s;" onmouseover="this.style.borderColor='var(--primary)'" onmouseout="this.style.borderColor='var(--border)'">
+        <div style="color:var(--dark);font-weight:700;font-size:15px;margin-bottom:6px;">Steenslag herstellen</div>
+        <div style="color:var(--muted);font-size:13px;line-height:1.6;">Kleine chips vakkundig hersteld zonder vervanging.</div>
+      </a>
+      <a href="mobiel-service.html" style="background:var(--surface);padding:24px;border-radius:4px;border:1.5px solid var(--border);text-decoration:none;transition:border-color 0.2s;" onmouseover="this.style.borderColor='var(--primary)'" onmouseout="this.style.borderColor='var(--border)'">
+        <div style="color:var(--dark);font-weight:700;font-size:15px;margin-bottom:6px;">Mobiel service</div>
+        <div style="color:var(--muted);font-size:13px;line-height:1.6;">Wij komen bij u — aan huis of op het werk.</div>
+      </a>
+    </div>
+  </div>
+</section>
+
+<footer style="background:var(--dark-deeper);padding:40px 0;">
+  <div style="max-width:1280px;margin:0 auto;padding:0 28px;display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:20px;">
+    <div style="display:flex;align-items:center;gap:8px;">
+      <div style="width:28px;height:28px;background:var(--primary);border-radius:3px;display:flex;align-items:center;justify-content:center;">
+        <svg width="15" height="15" fill="none" stroke="#fff" stroke-width="2.2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M3 9l2-5h14l2 5M3 9v8a1 1 0 001 1h16a1 1 0 001-1V9M3 9h18"/></svg>
+      </div>
+      <span style="color:#fff;font-weight:900;font-size:16px;letter-spacing:-0.025em;">AUTOGLAS <span style="color:var(--primary);">GT</span></span>
+    </div>
+    <div style="display:flex;align-items:center;gap:20px;flex-wrap:wrap;">
+      <a href="tel:+32495100881" style="color:rgba(255,255,255,0.5);font-size:13px;text-decoration:none;">+32 495 10 08 81</a>
+      <span style="color:rgba(255,255,255,0.2);">|</span>
+      <span style="color:rgba(255,255,255,0.5);font-size:13px;">Gieterijstraat 106/A2, 3600 Genk</span>
+    </div>
+    <p style="color:rgba(255,255,255,0.25);font-size:12px;">© 2026 Autoglas GT.</p>
+  </div>
+</footer>
+
+</body>
+</html>

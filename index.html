@@ -1,0 +1,1245 @@
+<!DOCTYPE html>
+<html lang="nl">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Autoglas GT — Specialist in autoruiten</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Archivo:ital,wght@0,400;0,500;0,600;0,700;0,800;0,900;1,400&display=swap" rel="stylesheet">
+
+  <style>
+    :root {
+      --primary:      #38C7EA;
+      --primary-dark: #1AAFD0;
+      --primary-pale: rgba(56,199,234,0.10);
+      --dark:         #364443;
+      --dark-deeper:  #243030;
+      --muted:        #6B8585;
+      --bg:           #D9E1E3;
+      --surface:      #ffffff;
+      --border:       rgba(54,68,67,0.10);
+      --shadow-sm:    0 2px 12px rgba(54,68,67,0.08);
+      --shadow-md:    0 8px 32px rgba(54,68,67,0.12);
+      --shadow-lg:    0 20px 60px rgba(54,68,67,0.16);
+    }
+
+    *, *::before, *::after { box-sizing: border-box; font-family: 'Archivo', sans-serif; }
+    html { scroll-behavior: smooth; }
+    body {
+      margin: 0; padding: 0;
+      background: var(--surface);
+      color: var(--dark);
+      font-size: 16px;
+      line-height: 1.75;
+      -webkit-font-smoothing: antialiased;
+    }
+
+    ::selection   { color: #fff; background: var(--primary); }
+    ::-webkit-scrollbar { width: 6px; }
+    ::-webkit-scrollbar-track { background: var(--bg); }
+    ::-webkit-scrollbar-thumb { background: var(--primary); border-radius: 3px; }
+
+    /* ── Liquid Glass nav ─────────────────── */
+    @keyframes liq-shimmer {
+      0%   { transform: translateX(-120%) rotate(18deg); opacity: 0; }
+      25%  { opacity: 1; }
+      75%  { opacity: 1; }
+      100% { transform: translateX(320%) rotate(18deg); opacity: 0; }
+    }
+    .liq-glass-pill {
+      background: linear-gradient(160deg, rgba(255,255,255,0.78) 0%, rgba(255,255,255,0.62) 50%, rgba(255,255,255,0.70) 100%);
+      backdrop-filter: blur(28px) saturate(180%) brightness(1.06);
+      -webkit-backdrop-filter: blur(28px) saturate(180%) brightness(1.06);
+      border: 1px solid rgba(255,255,255,0.92);
+      box-shadow:
+        0 2px 0 rgba(255,255,255,1) inset,
+        0 -1px 0 rgba(255,255,255,0.35) inset,
+        1px 0 0 rgba(255,255,255,0.65) inset,
+        -1px 0 0 rgba(255,255,255,0.65) inset,
+        0 12px 40px rgba(54,68,67,0.14),
+        0 2px 10px rgba(54,68,67,0.08);
+      position: relative; overflow: hidden;
+    }
+    .liq-glass-pill::before {
+      content: '';
+      position: absolute; top: -50%; left: -30%;
+      width: 36%; height: 200%;
+      background: linear-gradient(to right, transparent, rgba(255,255,255,0.35), transparent);
+      transform: rotate(18deg);
+      animation: liq-shimmer 8s ease-in-out infinite;
+      pointer-events: none; z-index: 0;
+    }
+    .liq-nav-link {
+      color: rgba(54,68,67,0.85);
+      font-size: 12.5px; font-weight: 600;
+      letter-spacing: 0.07em; text-transform: uppercase;
+      text-decoration: none;
+      padding: 6px 12px; border-radius: 10px;
+      transition: background 0.2s ease, color 0.2s ease;
+      position: relative; z-index: 1;
+    }
+    .liq-nav-link:hover {
+      background: rgba(255,255,255,0.65);
+      color: var(--dark);
+    }
+
+    /* ── Windshield glass shimmer ─────────── */
+    @keyframes ws-shimmer {
+      0%   { transform: translateX(-120%) skewX(-15deg); opacity: 0; }
+      30%  { opacity: 0.7; }
+      70%  { opacity: 0.7; }
+      100% { transform: translateX(250%) skewX(-15deg); opacity: 0; }
+    }
+
+    /* ── Reveal on scroll ─────────────────── */
+    .reveal {
+      opacity: 0;
+      transform: translateY(28px);
+      transition: opacity 0.65s cubic-bezier(.4,0,.2,1), transform 0.65s cubic-bezier(.4,0,.2,1);
+    }
+    .reveal.visible { opacity: 1; transform: translateY(0); }
+    .reveal-left  { opacity: 0; transform: translateX(-32px); transition: opacity 0.65s ease, transform 0.65s cubic-bezier(.4,0,.2,1); }
+    .reveal-left.visible  { opacity: 1; transform: translateX(0); }
+    .reveal-right { opacity: 0; transform: translateX(32px);  transition: opacity 0.65s ease, transform 0.65s cubic-bezier(.4,0,.2,1); }
+    .reveal-right.visible { opacity: 1; transform: translateX(0); }
+    .delay-1 { transition-delay: 0.10s !important; }
+    .delay-2 { transition-delay: 0.22s !important; }
+    .delay-3 { transition-delay: 0.34s !important; }
+    .delay-4 { transition-delay: 0.46s !important; }
+    .delay-5 { transition-delay: 0.58s !important; }
+    .delay-6 { transition-delay: 0.70s !important; }
+
+    /* ── Stone-impact ripple ──────────────── */
+    @keyframes ripple-out {
+      0%   { transform: translate(-50%,-50%) scale(0.05); opacity: 0.75; }
+      100% { transform: translate(-50%,-50%) scale(1);    opacity: 0; }
+    }
+    .ripple-ring {
+      position: absolute;
+      width: 580px; height: 580px;
+      border-radius: 50%;
+      border: 1.5px solid rgba(56,199,234,0.55);
+      top: 50%; left: 50%;
+      pointer-events: none;
+      animation: ripple-out 3.2s cubic-bezier(.25,.46,.45,.94) infinite;
+    }
+    .ripple-ring:nth-child(2) { animation-delay: 1.07s; border-color: rgba(56,199,234,0.35); }
+    .ripple-ring:nth-child(3) { animation-delay: 2.14s; border-color: rgba(56,199,234,0.18); }
+
+    /* impact star at the ripple origin */
+    @keyframes star-pulse {
+      0%,100% { transform: translate(-50%,-50%) scale(1); opacity: 0.9; }
+      50%      { transform: translate(-50%,-50%) scale(1.18); opacity: 0.6; }
+    }
+    .impact-star {
+      position: absolute; top: 50%; left: 50%;
+      width: 18px; height: 18px;
+      animation: star-pulse 2s ease-in-out infinite;
+      pointer-events: none; z-index: 20;
+    }
+
+    /* ── Nav links ────────────────────────── */
+    .nav-link { position: relative; text-decoration: none; }
+    .nav-link::after {
+      content: ''; position: absolute; bottom: -3px; left: 0; right: 0;
+      height: 2px; background: var(--primary); border-radius: 1px;
+      transform: scaleX(0); transform-origin: left;
+      transition: transform 0.25s cubic-bezier(.4,0,.2,1);
+    }
+    .nav-link:hover::after { transform: scaleX(1); }
+
+    /* ── Buttons ──────────────────────────── */
+    .btn {
+      display: inline-flex; align-items: center; gap: 8px;
+      font-weight: 700; font-size: 13px;
+      text-transform: uppercase; letter-spacing: 0.1em;
+      border: none; cursor: pointer; text-decoration: none;
+      transition: background 0.2s ease, box-shadow 0.2s ease, transform 0.12s ease;
+    }
+    .btn:active { transform: scale(0.97); }
+    .btn:focus-visible { outline: 2px solid var(--primary); outline-offset: 3px; }
+    .btn-primary {
+      background: var(--primary); color: #fff;
+      padding: 14px 32px;
+      box-shadow: 0 6px 24px rgba(56,199,234,0.35);
+    }
+    .btn-primary:hover {
+      background: var(--primary-dark);
+      box-shadow: 0 10px 32px rgba(56,199,234,0.45);
+    }
+    .btn-outline {
+      background: transparent; color: var(--dark);
+      padding: 13px 28px;
+      border: 2px solid var(--dark);
+    }
+    .btn-outline:hover { background: var(--dark); color: #fff; }
+    .btn-white {
+      background: #fff; color: var(--dark);
+      padding: 14px 32px;
+      box-shadow: 0 6px 24px rgba(0,0,0,0.12);
+    }
+    .btn-white:hover { background: var(--bg); box-shadow: 0 10px 32px rgba(0,0,0,0.16); }
+
+    /* ── Service cards ────────────────────── */
+    .service-card {
+      background: rgba(255,255,255,0.04);
+      border: 1px solid rgba(255,255,255,0.09);
+      padding: 36px 32px;
+      border-radius: 10px;
+      box-shadow: 0 4px 24px rgba(0,0,0,0.25);
+      transition:
+        box-shadow 0.32s ease,
+        transform 0.32s cubic-bezier(0.34,1.46,0.64,1),
+        border-color 0.32s ease,
+        background 0.32s ease;
+      cursor: default;
+      position: relative;
+      overflow: hidden;
+    }
+    /* Top-edge cyan highlight line — hidden until hover */
+    .service-card::before {
+      content: '';
+      position: absolute; top: 0; left: 0; right: 0; height: 2px;
+      background: linear-gradient(to right, transparent, var(--primary), transparent);
+      opacity: 0;
+      transition: opacity 0.32s ease;
+    }
+    /* Inner glow sweep on hover */
+    .service-card::after {
+      content: '';
+      position: absolute; inset: 0;
+      background: radial-gradient(ellipse 70% 60% at 50% 0%, rgba(56,199,234,0.09) 0%, transparent 70%);
+      opacity: 0;
+      transition: opacity 0.32s ease;
+      pointer-events: none;
+    }
+    .service-card:hover {
+      background: rgba(255,255,255,0.075);
+      border-color: rgba(56,199,234,0.35);
+      box-shadow: 0 20px 60px rgba(0,0,0,0.35), 0 0 0 1px rgba(56,199,234,0.18), 0 0 40px rgba(56,199,234,0.07);
+      transform: translateY(-6px);
+    }
+    .service-card:hover::before { opacity: 1; }
+    .service-card:hover::after  { opacity: 1; }
+    /* Text colors for dark-bg cards */
+    .service-card h3 { color: #fff !important; }
+    .service-card p  { color: rgba(255,255,255,0.52) !important; }
+    .service-card .card-icon > div,
+    .service-card [class="card-icon"] + div {
+      background: rgba(56,199,234,0.12) !important;
+      border-radius: 8px !important;
+    }
+    .service-card .card-icon { transition: transform 0.32s cubic-bezier(0.34,1.46,0.64,1); }
+    .service-card:hover .card-icon { transform: scale(1.08); }
+    .service-card .card-arrow {
+      opacity: 0; transform: translateX(-8px);
+      transition: opacity 0.25s ease, transform 0.25s ease;
+    }
+    .service-card:hover .card-arrow { opacity: 1; transform: translateX(0); }
+
+    /* ── Inputs / selects ─────────────────── */
+    input, select, textarea {
+      font-family: 'Archivo', sans-serif;
+      transition: border-color 0.2s ease, box-shadow 0.2s ease;
+    }
+    input:focus, select:focus, textarea:focus {
+      outline: none;
+      border-color: var(--primary) !important;
+      box-shadow: 0 0 0 3px rgba(56,199,234,0.15);
+    }
+    input::placeholder, textarea::placeholder { color: rgba(54,68,67,0.35); }
+
+    /* ── Windshield SVG decoration ────────── */
+    .windshield-deco {
+      position: absolute; top: 50%; left: 50%;
+      transform: translate(-50%,-50%);
+      opacity: 0.04; pointer-events: none;
+    }
+
+    /* ── Dot pattern ──────────────────────── */
+    .dot-pattern {
+      background-image: radial-gradient(circle, rgba(54,68,67,0.18) 1px, transparent 1px);
+      background-size: 20px 20px;
+    }
+
+    /* ── Diagonal lines texture ───────────── */
+    .lines-texture {
+      background-image: repeating-linear-gradient(
+        45deg, transparent, transparent 2px,
+        rgba(54,68,67,0.025) 2px, rgba(54,68,67,0.025) 4px
+      );
+    }
+
+    /* ── Step connector line ──────────────── */
+    .step-line {
+      position: absolute; top: 22px;
+      left: calc(50% + 28px); right: calc(-50% + 28px);
+      height: 1px;
+      background: linear-gradient(to right, var(--primary), rgba(56,199,234,0.15));
+    }
+
+    /* ── Section label ────────────────────── */
+    .section-label {
+      display: inline-block;
+      color: var(--primary); font-size: 11px;
+      font-weight: 700; letter-spacing: 0.22em;
+      text-transform: uppercase; margin-bottom: 12px;
+    }
+
+    /* ── Divider line ─────────────────────── */
+    .divider { width: 48px; height: 3px; background: var(--primary); border-radius: 2px; }
+
+    @media (max-width: 768px) {
+      .md-hidden { display: none !important; }
+      .hero-grid { grid-template-columns: 1fr !important; }
+      .form-grid  { grid-template-columns: 1fr !important; }
+      .dienst-grid { grid-template-columns: 1fr !important; }
+      .steps-grid  { grid-template-columns: 1fr 1fr !important; }
+      .footer-grid { grid-template-columns: 1fr !important; }
+    }
+  </style>
+</head>
+<body>
+
+<!-- ═══════════════════════════════════════════
+     HEADER — Liquid Glass (iOS-style)
+═══════════════════════════════════════════ -->
+<header style="position:fixed;top:12px;left:16px;right:16px;z-index:100;border-radius:22px;">
+  <div class="liq-glass-pill">
+    <div style="max-width:1280px;margin:0 auto;padding:0 24px;height:78px;display:flex;align-items:center;justify-content:space-between;gap:20px;position:relative;z-index:1;">
+
+      <!-- Logo -->
+      <a href="index.html" style="text-decoration:none;display:flex;align-items:center;flex-shrink:0;">
+        <img src="Logo_Autoglasgt.jpg" alt="Autoglas GT" style="height:58px;width:auto;display:block;border-radius:6px;">
+      </a>
+
+      <!-- Nav links -->
+      <nav class="md-hidden" style="display:flex;align-items:center;gap:4px;">
+        <a href="#diensten" class="liq-nav-link">Diensten</a>
+        <a href="#over-ons" class="liq-nav-link">Over ons</a>
+        <a href="#werkwijze" class="liq-nav-link">Werkwijze</a>
+        <a href="#contact" class="liq-nav-link">Contact</a>
+      </nav>
+
+      <!-- Phone CTA pill -->
+      <a href="tel:+3249510081" style="display:flex;align-items:center;gap:8px;text-decoration:none;flex-shrink:0;
+        background:rgba(56,199,234,0.12);border:1px solid rgba(56,199,234,0.3);
+        padding:8px 16px;border-radius:12px;
+        transition:background 0.2s ease;position:relative;z-index:1;"
+        onmouseover="this.style.background='rgba(56,199,234,0.22)'"
+        onmouseout="this.style.background='rgba(56,199,234,0.12)'">
+        <svg width="14" height="14" fill="var(--primary)" viewBox="0 0 20 20"><path d="M2 3a1 1 0 011-1h2.153a1 1 0 01.986.836l.74 4.435a1 1 0 01-.54 1.06l-1.548.773a11.037 11.037 0 006.105 6.105l.774-1.548a1 1 0 011.059-.54l4.435.74a1 1 0 01.836.986V17a1 1 0 01-1 1h-2C7.82 18 2 12.18 2 5V3z"/></svg>
+        <div class="md-hidden">
+          <div style="font-size:10px;color:var(--muted);font-weight:600;letter-spacing:0.05em;line-height:1;">Bel ons</div>
+          <div style="font-size:13px;color:var(--dark);font-weight:700;line-height:1.3;">+32 495 10 08 81</div>
+        </div>
+      </a>
+    </div>
+  </div>
+</header>
+
+
+<!-- ═══════════════════════════════════════════
+     HERO — Windshield with crack animation
+═══════════════════════════════════════════ -->
+<section id="top" style="position:relative;background:linear-gradient(160deg,#1c2c2c 0%,var(--dark) 50%,#243535 100%);padding:118px 0 48px;overflow:hidden;">
+
+  <!-- Subtle grid texture -->
+  <div style="position:absolute;inset:0;background-image:repeating-linear-gradient(0deg,transparent,transparent 40px,rgba(255,255,255,0.018) 40px,rgba(255,255,255,0.018) 41px),repeating-linear-gradient(90deg,transparent,transparent 40px,rgba(255,255,255,0.018) 40px,rgba(255,255,255,0.018) 41px);pointer-events:none;"></div>
+  <!-- Radial cyan glow top-left -->
+  <div style="position:absolute;top:-20%;left:-8%;width:600px;height:600px;border-radius:50%;background:radial-gradient(circle,rgba(56,199,234,0.10) 0%,transparent 65%);pointer-events:none;"></div>
+  <!-- Radial warm glow bottom-right -->
+  <div style="position:absolute;bottom:-25%;right:-8%;width:550px;height:550px;border-radius:50%;background:radial-gradient(circle,rgba(56,199,234,0.06) 0%,transparent 65%);pointer-events:none;"></div>
+  <!-- Horizontal accent line -->
+  <div style="position:absolute;bottom:0;left:0;right:0;height:1px;background:linear-gradient(to right,transparent,rgba(56,199,234,0.3),transparent);"></div>
+
+  <div style="max-width:1360px;margin:0 auto;padding:0 16px;">
+
+      <!-- ════ WINDSHIELD WRAPPER (aspect ratio 1300:540) ════ -->
+      <div id="windshield-wrap" style="position:relative;width:100%;padding-bottom:41.5%;filter:drop-shadow(0 28px 56px rgba(20,40,40,0.28)) drop-shadow(0 6px 18px rgba(20,40,40,0.16));">
+
+        <!-- 1 ── Premium glass SVG ─────────────────────────── -->
+        <svg id="ws-bg" viewBox="0 0 1300 540" preserveAspectRatio="xMidYMid meet"
+             style="position:absolute;top:0;left:0;width:100%;height:100%;" aria-hidden="true">
+          <defs>
+            <!-- Outer glow / shadow filter -->
+            <filter id="ws-shadow" x="-4%" y="-6%" width="108%" height="118%">
+              <feDropShadow dx="0" dy="8" stdDeviation="22" flood-color="rgba(10,20,20,0.65)"/>
+            </filter>
+            <!-- Frit (ceramic dark border) filter — subtle blur for smooth edges -->
+            <filter id="frit-blur" x="-1%" y="-1%" width="102%" height="102%">
+              <feGaussianBlur stdDeviation="1.2"/>
+            </filter>
+
+            <!-- Main glass fill: realistic automotive blue-green tint -->
+            <linearGradient id="ws-fill" x1="0" y1="0" x2="0.15" y2="1">
+              <stop offset="0%"   stop-color="#c2e8f4" stop-opacity="0.97"/>
+              <stop offset="18%"  stop-color="#cdedf5" stop-opacity="0.95"/>
+              <stop offset="50%"  stop-color="#dff3ef" stop-opacity="0.93"/>
+              <stop offset="80%"  stop-color="#eaf6f1" stop-opacity="0.92"/>
+              <stop offset="100%" stop-color="#f2f9f6" stop-opacity="0.90"/>
+            </linearGradient>
+
+            <!-- Tinted band at the very top (privacy band) — deep blue like real windshields -->
+            <linearGradient id="ws-tint-band" x1="0" y1="0" x2="0" y2="1">
+              <stop offset="0%"   stop-color="#1a4a6a" stop-opacity="0.52"/>
+              <stop offset="40%"  stop-color="#2a6080" stop-opacity="0.20"/>
+              <stop offset="100%" stop-color="#38C7EA"  stop-opacity="0"/>
+            </linearGradient>
+
+            <!-- Primary bright reflection: wide diagonal band from upper-left -->
+            <linearGradient id="ws-reflect-1" x1="0" y1="0" x2="1" y2="0.6">
+              <stop offset="0%"   stop-color="#ffffff" stop-opacity="0.72"/>
+              <stop offset="28%"  stop-color="#ffffff" stop-opacity="0.38"/>
+              <stop offset="52%"  stop-color="#ffffff" stop-opacity="0"/>
+            </linearGradient>
+            <!-- Secondary reflection: right side, weaker -->
+            <linearGradient id="ws-reflect-2" x1="1" y1="0" x2="0.5" y2="0.5">
+              <stop offset="0%"   stop-color="#ddf5ff" stop-opacity="0.30"/>
+              <stop offset="100%" stop-color="#ddf5ff" stop-opacity="0"/>
+            </linearGradient>
+
+            <!-- Edge iridescence (glassy edge coloring — like real auto glass viewed at angle) -->
+            <linearGradient id="ws-edge-iris" x1="0" y1="0" x2="0" y2="1">
+              <stop offset="0%"   stop-color="#38C7EA" stop-opacity="0.45"/>
+              <stop offset="35%"  stop-color="#7fe4c8" stop-opacity="0.20"/>
+              <stop offset="65%"  stop-color="#38C7EA" stop-opacity="0.12"/>
+              <stop offset="100%" stop-color="#1ab8e0" stop-opacity="0.30"/>
+            </linearGradient>
+
+            <!-- Frit band fill (ceramic black border — THE most realistic detail) -->
+            <linearGradient id="frit-fill" x1="0" y1="0" x2="0" y2="1">
+              <stop offset="0%"   stop-color="#0d1818"/>
+              <stop offset="100%" stop-color="#1a2828"/>
+            </linearGradient>
+
+            <!-- Clip path = windshield shape for clipping overlays -->
+            <clipPath id="ws-clip">
+              <path d="M 22,530 C 6,530 0,516 2,494 L 140,28 C 149,6 172,2 206,2 L 1094,2 C 1128,2 1151,6 1160,28 L 1298,494 C 1300,516 1294,530 1278,530 Z"/>
+            </clipPath>
+            <!-- Left-side text readability scrim -->
+            <linearGradient id="text-scrim" x1="0" y1="0" x2="1" y2="0">
+              <stop offset="0%"   stop-color="#0a1818" stop-opacity="0.62"/>
+              <stop offset="55%"  stop-color="#0a1818" stop-opacity="0.18"/>
+              <stop offset="100%" stop-color="#0a1818" stop-opacity="0"/>
+            </linearGradient>
+          </defs>
+
+          <!-- ─── Layer 0: Drop shadow base ─── -->
+          <path
+            d="M 22,530 C 6,530 0,516 2,494 L 140,28 C 149,6 172,2 206,2 L 1094,2 C 1128,2 1151,6 1160,28 L 1298,494 C 1300,516 1294,530 1278,530 Z"
+            fill="rgba(10,20,20,0.25)" filter="url(#ws-shadow)" transform="translate(0,4)"/>
+
+          <!-- ─── Layer 1: Main glass body ─── -->
+          <path id="ws-shape"
+            d="M 22,530 C 6,530 0,516 2,494 L 140,28 C 149,6 172,2 206,2 L 1094,2 C 1128,2 1151,6 1160,28 L 1298,494 C 1300,516 1294,530 1278,530 Z"
+            fill="url(#ws-fill)"/>
+
+          <!-- ─── Layer 2: Top privacy tint band ─── -->
+          <path
+            d="M 22,530 C 6,530 0,516 2,494 L 140,28 C 149,6 172,2 206,2 L 1094,2 C 1128,2 1151,6 1160,28 L 1298,494 C 1300,516 1294,530 1278,530 Z"
+            fill="url(#ws-tint-band)" clip-path="url(#ws-clip)"/>
+
+          <!-- ─── Layer 3: CERAMIC FRIT BAND (black border — real windshield look) ─── -->
+          <!-- Top frit bar -->
+          <path d="M 206,2 L 1094,2 L 1070,48 L 230,48 Z" fill="url(#frit-fill)" opacity="0.97" filter="url(#frit-blur)"/>
+          <!-- Left frit bar -->
+          <path d="M 140,28 L 206,2 L 230,48 L 108,340 Z" fill="url(#frit-fill)" opacity="0.95" filter="url(#frit-blur)"/>
+          <!-- Right frit bar -->
+          <path d="M 1094,2 L 1160,28 L 1192,340 L 1070,48 Z" fill="url(#frit-fill)" opacity="0.95" filter="url(#frit-blur)"/>
+          <!-- Bottom frit bar -->
+          <path d="M 22,530 L 1278,530 L 1240,470 L 60,470 Z" fill="url(#frit-fill)" opacity="0.92" filter="url(#frit-blur)"/>
+
+          <!-- Frit inner edge highlight (chrome-like thin line — rubber seal) -->
+          <path d="M 230,48 L 1070,48 L 1068,52 L 232,52 Z" fill="rgba(255,255,255,0.18)"/>
+          <path d="M 60,470 L 1240,470 L 1238,474 L 62,474 Z" fill="rgba(255,255,255,0.10)"/>
+
+          <!-- ─── Layer 4: Edge iridescence (thin colored rim) ─── -->
+          <path
+            d="M 22,530 C 6,530 0,516 2,494 L 140,28 C 149,6 172,2 206,2 L 1094,2 C 1128,2 1151,6 1160,28 L 1298,494 C 1300,516 1294,530 1278,530 Z"
+            fill="none" stroke="url(#ws-edge-iris)" stroke-width="3.5" opacity="0.75"/>
+
+          <!-- ─── Layer 5: Primary reflection (broad daylight glare, upper-left) ─── -->
+          <path
+            d="M 206,2 L 620,2 L 550,170 L 230,48 Z"
+            fill="url(#ws-reflect-1)" clip-path="url(#ws-clip)" opacity="0.80"/>
+
+          <!-- ─── Layer 6: Secondary reflection band (diagonal from right) ─── -->
+          <path d="M 900,2 L 1094,2 L 1160,28 L 1192,160 L 960,80 Z"
+            fill="url(#ws-reflect-2)" clip-path="url(#ws-clip)" opacity="0.65"/>
+
+          <!-- ─── Layer 7: Central glass clarity — subtle diffuse highlight ─── -->
+          <ellipse cx="650" cy="270" rx="420" ry="180"
+            fill="rgba(255,255,255,0.07)" clip-path="url(#ws-clip)"/>
+
+          <!-- ─── Layer 7b: Text-area readability scrim (left side darker) ─── -->
+          <path
+            d="M 22,530 C 6,530 0,516 2,494 L 140,28 C 149,6 172,2 206,2 L 1094,2 C 1128,2 1151,6 1160,28 L 1298,494 C 1300,516 1294,530 1278,530 Z"
+            fill="url(#text-scrim)" clip-path="url(#ws-clip)"/>
+
+          <!-- ─── Layer 8: Wiper sweep arcs ─── -->
+          <path d="M 68,520 Q 650,182 1232,520"  fill="none" stroke="rgba(20,35,35,0.05)" stroke-width="1.6" clip-path="url(#ws-clip)"/>
+          <path d="M 90,534 Q 650,215 1210,534" fill="none" stroke="rgba(20,35,35,0.04)" stroke-width="1.0" clip-path="url(#ws-clip)"/>
+
+          <!-- ─── Layer 9: Fine dust/texture micro detail ─── -->
+          <path d="M 240,50 L 1060,50 L 1058,54 L 242,54 Z" fill="rgba(200,230,240,0.15)" clip-path="url(#ws-clip)"/>
+
+          <!-- ─── Layer 10: Moving shimmer sweep ─── -->
+          <foreignObject x="0" y="0" width="100%" height="100%" style="overflow:hidden;" clip-path="url(#ws-clip)">
+            <div xmlns="http://www.w3.org/1999/xhtml" style="width:100%;height:100%;position:relative;overflow:hidden;">
+              <div style="position:absolute;top:-50%;left:0;width:22%;height:200%;
+                background:linear-gradient(to right,transparent,rgba(255,255,255,0.22),transparent);
+                transform:skewX(-12deg);
+                animation:ws-shimmer 5s ease-in-out infinite 1.2s;
+                pointer-events:none;"></div>
+            </div>
+          </foreignObject>
+        </svg>
+
+        <!-- 2 ── Crack animation SVG (impact: 870,145) ─────── -->
+        <svg id="crack-svg" viewBox="0 0 1300 540" preserveAspectRatio="xMidYMid meet"
+             style="position:absolute;top:0;left:0;width:100%;height:100%;pointer-events:none;" aria-hidden="true">
+
+          <!-- Shockwave rings at impact (CSS animated separately) -->
+          <g id="shock-rings" style="opacity:0;">
+            <circle cx="870" cy="145" r="18" fill="none" stroke="rgba(54,68,67,0.18)" stroke-width="1.2"/>
+            <circle cx="870" cy="145" r="28" fill="none" stroke="rgba(54,68,67,0.10)" stroke-width="1"/>
+            <circle cx="870" cy="145" r="40" fill="none" stroke="rgba(54,68,67,0.06)" stroke-width="0.8"/>
+          </g>
+
+          <!-- Impact chip -->
+          <g id="impact-chip" style="opacity:0;">
+            <circle cx="870" cy="145" r="12" fill="none" stroke="rgba(54,68,67,0.22)" stroke-width="1.2"/>
+            <circle cx="870" cy="145" r="7"  fill="rgba(54,68,67,0.14)"/>
+            <circle cx="870" cy="145" r="4"  fill="rgba(54,68,67,0.50)"/>
+            <circle cx="870" cy="145" r="1.8" fill="rgba(54,68,67,0.80)"/>
+            <!-- Tiny star spurs -->
+            <line x1="870" y1="133" x2="870" y2="128" stroke="rgba(54,68,67,0.5)" stroke-width="0.8"/>
+            <line x1="870" y1="157" x2="870" y2="162" stroke="rgba(54,68,67,0.5)" stroke-width="0.8"/>
+            <line x1="858" y1="145" x2="853" y2="145" stroke="rgba(54,68,67,0.5)" stroke-width="0.8"/>
+            <line x1="882" y1="145" x2="887" y2="145" stroke="rgba(54,68,67,0.5)" stroke-width="0.8"/>
+          </g>
+
+          <!-- ── Main cracks (dual-stroke: dark line + white highlight = glass fracture look) ── -->
+          <path class="cl cm" d="M870,145 L818,82 L768,36 L728,6"         stroke="rgba(255,255,255,0.55)" stroke-width="2.8" fill="none" opacity="0.7"/>
+          <path class="cl cm" d="M870,145 L818,82 L768,36 L728,6"         stroke="#1a2828" stroke-width="1.4" fill="none" opacity="0.75"/>
+          <path class="cl cm" d="M870,145 L858,72 L844,10"                stroke="rgba(255,255,255,0.45)" stroke-width="2.2" fill="none" opacity="0.65"/>
+          <path class="cl cm" d="M870,145 L858,72 L844,10"                stroke="#1a2828" stroke-width="1.0" fill="none" opacity="0.65"/>
+          <path class="cl cm" d="M870,145 L958,84 L1034,38 L1095,6"       stroke="rgba(255,255,255,0.55)" stroke-width="2.8" fill="none" opacity="0.72"/>
+          <path class="cl cm" d="M870,145 L958,84 L1034,38 L1095,6"       stroke="#1a2828" stroke-width="1.4" fill="none" opacity="0.78"/>
+          <path class="cl cm" d="M870,145 L1010,136 L1148,144 L1250,154"  stroke="rgba(255,255,255,0.45)" stroke-width="2.4" fill="none" opacity="0.68"/>
+          <path class="cl cm" d="M870,145 L1010,136 L1148,144 L1250,154"  stroke="#1a2828" stroke-width="1.2" fill="none" opacity="0.70"/>
+          <path class="cl cm" d="M870,145 L962,248 L1045,342 L1105,425"   stroke="rgba(255,255,255,0.45)" stroke-width="2.6" fill="none" opacity="0.70"/>
+          <path class="cl cm" d="M870,145 L962,248 L1045,342 L1105,425"   stroke="#1a2828" stroke-width="1.3" fill="none" opacity="0.72"/>
+          <path class="cl cm" d="M870,145 L866,272 L858,392 L848,478"     stroke="rgba(255,255,255,0.40)" stroke-width="2.2" fill="none" opacity="0.64"/>
+          <path class="cl cm" d="M870,145 L866,272 L858,392 L848,478"     stroke="#1a2828" stroke-width="1.1" fill="none" opacity="0.66"/>
+          <path class="cl cm" d="M870,145 L782,255 L706,358 L648,438"     stroke="rgba(255,255,255,0.45)" stroke-width="2.6" fill="none" opacity="0.70"/>
+          <path class="cl cm" d="M870,145 L782,255 L706,358 L648,438"     stroke="#1a2828" stroke-width="1.3" fill="none" opacity="0.72"/>
+          <path class="cl cm" d="M870,145 L726,132 L580,120 L452,126"     stroke="rgba(255,255,255,0.42)" stroke-width="2.4" fill="none" opacity="0.68"/>
+          <path class="cl cm" d="M870,145 L726,132 L580,120 L452,126"     stroke="#1a2828" stroke-width="1.2" fill="none" opacity="0.70"/>
+
+          <!-- ── Secondary branches ── -->
+          <path class="cl cs" d="M818,82 L862,46 L900,14"                 stroke="rgba(255,255,255,0.35)" stroke-width="1.6" fill="none" opacity="0.52"/>
+          <path class="cl cs" d="M818,82 L862,46 L900,14"                 stroke="#1a2828" stroke-width="0.8" fill="none" opacity="0.50"/>
+          <path class="cl cs" d="M958,84 L960,42 L956,8"                  stroke="rgba(255,255,255,0.30)" stroke-width="1.5" fill="none" opacity="0.48"/>
+          <path class="cl cs" d="M958,84 L960,42 L956,8"                  stroke="#1a2828" stroke-width="0.75" fill="none" opacity="0.48"/>
+          <path class="cl cs" d="M1010,136 L998,190 L985,242"             stroke="rgba(255,255,255,0.30)" stroke-width="1.5" fill="none" opacity="0.48"/>
+          <path class="cl cs" d="M1010,136 L998,190 L985,242"             stroke="#1a2828" stroke-width="0.8" fill="none" opacity="0.48"/>
+          <path class="cl cs" d="M962,248 L1008,240 L1050,256"            stroke="rgba(255,255,255,0.28)" stroke-width="1.4" fill="none" opacity="0.44"/>
+          <path class="cl cs" d="M962,248 L1008,240 L1050,256"            stroke="#1a2828" stroke-width="0.7" fill="none" opacity="0.44"/>
+          <path class="cl cs" d="M782,255 L744,264 L714,290"              stroke="rgba(255,255,255,0.28)" stroke-width="1.4" fill="none" opacity="0.44"/>
+          <path class="cl cs" d="M782,255 L744,264 L714,290"              stroke="#1a2828" stroke-width="0.7" fill="none" opacity="0.44"/>
+          <path class="cl cs" d="M726,132 L732,174 L722,218 L708,256"     stroke="rgba(255,255,255,0.30)" stroke-width="1.5" fill="none" opacity="0.48"/>
+          <path class="cl cs" d="M726,132 L732,174 L722,218 L708,256"     stroke="#1a2828" stroke-width="0.8" fill="none" opacity="0.46"/>
+          <path class="cl cs" d="M580,120 L586,158 L574,198"              stroke="rgba(255,255,255,0.25)" stroke-width="1.3" fill="none" opacity="0.42"/>
+          <path class="cl cs" d="M580,120 L586,158 L574,198"              stroke="#1a2828" stroke-width="0.65" fill="none" opacity="0.40"/>
+          <path class="cl cs" d="M858,272 L892,266 L924,278"              stroke="rgba(255,255,255,0.25)" stroke-width="1.3" fill="none" opacity="0.42"/>
+          <path class="cl cs" d="M858,272 L892,266 L924,278"              stroke="#1a2828" stroke-width="0.65" fill="none" opacity="0.40"/>
+        </svg>
+
+        <!-- 3 ── Content inside windshield ──────────────────── -->
+        <div style="position:absolute;top:0;left:0;width:100%;height:100%;display:flex;align-items:center;">
+          <!-- Text occupies left ~55%, crack zone on the right -->
+          <div style="padding:7% 42% 7% 7%;width:100%;">
+
+            <span class="reveal" style="display:inline-block;margin-bottom:12px;font-size:11px;font-weight:700;letter-spacing:0.18em;text-transform:uppercase;color:var(--primary);text-shadow:0 1px 8px rgba(0,0,0,0.7);">Specialist in autoruiten</span>
+
+            <h1 class="reveal delay-1"
+                style="color:#fff;font-weight:900;font-size:clamp(1.6rem,3.2vw,3.4rem);line-height:1.08;letter-spacing:-0.03em;margin:0 0 14px;text-shadow:0 1px 2px rgba(0,0,0,0.8),0 4px 20px rgba(0,0,0,0.6),0 8px 40px rgba(0,0,0,0.4);">
+              Een ster of barst in uw voorruit?<br>
+              <span style="color:var(--primary);text-shadow:0 1px 2px rgba(0,0,0,0.7),0 4px 16px rgba(0,0,0,0.5);">Zijruit of achterruit kapot?</span>
+            </h1>
+
+            <p class="reveal delay-2"
+               style="color:rgba(255,255,255,0.88);font-size:clamp(13px,1.15vw,15px);line-height:1.75;margin-bottom:22px;text-shadow:0 1px 6px rgba(0,0,0,0.6);">
+              Autoglas GT is gespecialiseerd in het vervangen of herstellen van uw autoruiten en dit zowel voor personenwagens, bestelwagens...
+            </p>
+
+            <div class="reveal delay-3" style="display:flex;align-items:center;gap:10px;flex-wrap:wrap;">
+              <a href="#offerte" class="btn btn-primary" style="padding:12px 22px;font-size:12px;">
+                Gratis offerte
+                <svg width="13" height="13" fill="none" stroke="currentColor" stroke-width="2.2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M13 7l5 5m0 0l-5 5m5-5H6"/></svg>
+              </a>
+              <a href="tel:+3249510081" class="btn btn-outline" style="padding:11px 18px;font-size:12px;">
+                <svg width="13" height="13" fill="currentColor" viewBox="0 0 20 20"><path d="M2 3a1 1 0 011-1h2.153a1 1 0 01.986.836l.74 4.435a1 1 0 01-.54 1.06l-1.548.773a11.037 11.037 0 006.105 6.105l.774-1.548a1 1 0 011.059-.54l4.435.74a1 1 0 01.836.986V17a1 1 0 01-1 1h-2C7.82 18 2 12.18 2 5V3z"/></svg>
+                +32 495 10 08 81
+              </a>
+            </div>
+
+            <div class="reveal delay-4" style="display:flex;gap:8px;margin-top:18px;flex-wrap:wrap;">
+              <div style="background:var(--primary);color:#fff;padding:5px 12px;border-radius:8px;font-size:10px;font-weight:700;letter-spacing:0.12em;text-transform:uppercase;box-shadow:0 4px 14px rgba(56,199,234,0.35);">Gratis offerte</div>
+              <div style="background:rgba(255,255,255,0.12);color:rgba(255,255,255,0.9);padding:5px 12px;border-radius:8px;font-size:10px;font-weight:700;letter-spacing:0.08em;text-transform:uppercase;border:1px solid rgba(255,255,255,0.22);backdrop-filter:blur(8px);">Alle verzekeringen</div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <!-- ════ END WINDSHIELD ════ -->
+
+    <!-- Stats row below windshield -->
+    <div class="reveal delay-3" style="display:grid;grid-template-columns:repeat(3,1fr);border-top:1px solid rgba(255,255,255,0.10);border-left:1px solid rgba(255,255,255,0.10);margin-top:20px;">
+      <div style="padding:20px 24px;border-right:1px solid rgba(255,255,255,0.10);border-bottom:1px solid rgba(255,255,255,0.10);">
+        <div style="color:#fff;font-weight:900;font-size:30px;letter-spacing:-0.04em;line-height:1;" class="counter" data-target="500">0</div>
+        <div style="color:var(--primary);font-size:10px;font-weight:700;letter-spacing:0.1em;text-transform:uppercase;margin-top:3px;">+ klanten</div>
+        <div style="color:rgba(255,255,255,0.4);font-size:12px;margin-top:2px;">Tevreden klanten</div>
+      </div>
+      <div style="padding:20px 24px;border-right:1px solid rgba(255,255,255,0.10);border-bottom:1px solid rgba(255,255,255,0.10);">
+        <div style="color:#fff;font-weight:900;font-size:30px;letter-spacing:-0.04em;line-height:1;" class="counter" data-target="20">0</div>
+        <div style="color:var(--primary);font-size:10px;font-weight:700;letter-spacing:0.1em;text-transform:uppercase;margin-top:3px;">+ jaar</div>
+        <div style="color:rgba(255,255,255,0.4);font-size:12px;margin-top:2px;">Ervaring</div>
+      </div>
+      <div style="padding:20px 24px;border-right:1px solid rgba(255,255,255,0.10);border-bottom:1px solid rgba(255,255,255,0.10);">
+        <div style="color:#fff;font-weight:900;font-size:30px;letter-spacing:-0.04em;line-height:1;">24</div>
+        <div style="color:var(--primary);font-size:10px;font-weight:700;letter-spacing:0.1em;text-transform:uppercase;margin-top:3px;">u service</div>
+        <div style="color:rgba(255,255,255,0.4);font-size:12px;margin-top:2px;">Snelle reactie</div>
+      </div>
+    </div>
+
+  </div><!-- /max-width -->
+
+  <!-- Scroll cue -->
+  <div style="display:flex;flex-direction:column;align-items:center;gap:7px;color:rgba(255,255,255,0.35);font-size:10px;letter-spacing:0.14em;text-transform:uppercase;margin-top:28px;">
+    <span>Scroll</span>
+    <div style="width:1px;height:24px;background:linear-gradient(to bottom,rgba(255,255,255,0.3),transparent);"></div>
+  </div>
+</section>
+
+<!-- ── Crack animation script ────────────────────────────────── -->
+<script>
+(function () {
+  function initCracks() {
+    var clines = document.querySelectorAll('#crack-svg .cl');
+    clines.forEach(function (line) {
+      var len;
+      try { len = line.getTotalLength(); } catch (e) { len = 350; }
+      line.style.transition       = 'none';
+      line.style.strokeDasharray  = len;
+      line.style.strokeDashoffset = len;
+    });
+    var chip = document.getElementById('impact-chip');
+    chip.style.transition = 'none';
+    chip.style.opacity    = '0';
+    var svg = document.getElementById('crack-svg');
+    svg.style.transition  = 'none';
+    svg.style.opacity     = '1';
+  }
+
+  function runCracks() {
+    initCracks();
+
+    var chip  = document.getElementById('impact-chip');
+    var mains = document.querySelectorAll('#crack-svg .cm');
+    var secs  = document.querySelectorAll('#crack-svg .cs');
+
+    // Show impact chip
+    setTimeout(function () {
+      chip.style.transition = 'opacity 0.22s ease';
+      chip.style.opacity    = '1';
+    }, 280);
+
+    // Draw main cracks with stagger
+    mains.forEach(function (line, i) {
+      setTimeout(function () {
+        var dur = (0.48 + Math.random() * 0.32).toFixed(2);
+        line.style.transition       = 'stroke-dashoffset ' + dur + 's cubic-bezier(0.25,0.46,0.45,0.94)';
+        line.style.strokeDashoffset = '0';
+      }, 440 + i * 165);
+    });
+
+    // Draw secondary cracks (after mains finish)
+    secs.forEach(function (line, i) {
+      setTimeout(function () {
+        var dur = (0.38 + Math.random() * 0.28).toFixed(2);
+        line.style.transition       = 'stroke-dashoffset ' + dur + 's cubic-bezier(0.25,0.46,0.45,0.94)';
+        line.style.strokeDashoffset = '0';
+      }, 1900 + i * 125);
+    });
+
+    // After ~10 s hold: fade out & restart
+    setTimeout(function () {
+      var svg = document.getElementById('crack-svg');
+      svg.style.transition = 'opacity 0.75s ease';
+      svg.style.opacity    = '0';
+      setTimeout(runCracks, 950);
+    }, 10000);
+  }
+
+  if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', runCracks);
+  } else {
+    runCracks();
+  }
+}());
+</script>
+
+
+<!-- ═══════════════════════════════════════════
+     USP BANNER
+═══════════════════════════════════════════ -->
+<div style="background:var(--bg);border-top:1px solid var(--border);border-bottom:1px solid var(--border);padding:20px 28px;overflow:hidden;">
+  <div style="max-width:1280px;margin:0 auto;display:flex;align-items:center;justify-content:space-between;gap:24px;flex-wrap:wrap;">
+    <div style="display:flex;align-items:center;gap:10px;">
+      <svg width="20" height="20" fill="var(--primary)" viewBox="0 0 20 20"><path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd"/></svg>
+      <span style="font-size:14px;font-weight:600;color:var(--dark);">Gratis & vrijblijvend</span>
+    </div>
+    <div style="width:1px;height:24px;background:var(--border);"></div>
+    <div style="display:flex;align-items:center;gap:10px;">
+      <svg width="20" height="20" fill="var(--primary)" viewBox="0 0 20 20"><path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd"/></svg>
+      <span style="font-size:14px;font-weight:600;color:var(--dark);">Reactie binnen 24 uur</span>
+    </div>
+    <div style="width:1px;height:24px;background:var(--border);"></div>
+    <div style="display:flex;align-items:center;gap:10px;">
+      <svg width="20" height="20" fill="var(--primary)" viewBox="0 0 20 20"><path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd"/></svg>
+      <span style="font-size:14px;font-weight:600;color:var(--dark);">Erkend door alle verzekeraars</span>
+    </div>
+    <div style="width:1px;height:24px;background:var(--border);"></div>
+    <div style="display:flex;align-items:center;gap:10px;">
+      <svg width="20" height="20" fill="var(--primary)" viewBox="0 0 20 20"><path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd"/></svg>
+      <span style="font-size:14px;font-weight:600;color:var(--dark);">OEM kwaliteitsruiten</span>
+    </div>
+    <div style="width:1px;height:24px;background:var(--border);"></div>
+    <div style="display:flex;align-items:center;gap:10px;">
+      <svg width="20" height="20" fill="var(--primary)" viewBox="0 0 20 20"><path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd"/></svg>
+      <span style="font-size:14px;font-weight:600;color:var(--dark);">Alle merken &amp; modellen</span>
+    </div>
+  </div>
+</div>
+
+
+<!-- ═══════════════════════════════════════════
+     OFFERTE SECTION (dark teal bg)
+═══════════════════════════════════════════ -->
+<section id="offerte" style="position:relative;padding:100px 0;background:var(--dark);overflow:hidden;" class="lines-texture">
+  <!-- Accent glow -->
+  <div style="position:absolute;top:-200px;right:-200px;width:500px;height:500px;border-radius:50%;background:radial-gradient(circle,rgba(56,199,234,0.08) 0%,transparent 70%);pointer-events:none;"></div>
+  <div style="position:absolute;top:0;left:0;right:0;height:3px;background:linear-gradient(to right,transparent,var(--primary),transparent);opacity:0.6;"></div>
+
+  <div style="position:relative;z-index:2;max-width:1280px;margin:0 auto;padding:0 28px;display:grid;grid-template-columns:1fr 1fr;gap:80px;align-items:start;" class="hero-grid">
+
+    <!-- Left text -->
+    <div class="reveal-left">
+      <span class="section-label">Snel geholpen</span>
+      <h2 style="color:#fff;font-weight:900;font-size:clamp(2rem,3.5vw,3.2rem);line-height:1.05;letter-spacing:-0.03em;margin:8px 0 20px;">
+        Vraag nu een<br><span style="color:var(--primary);">offerte aan</span>
+      </h2>
+      <p style="color:rgba(255,255,255,0.55);line-height:1.75;margin-bottom:32px;font-size:15px;">
+        Vul het formulier in en wij nemen zo snel mogelijk contact op. Transparante prijzen, geen verrassingen.
+      </p>
+      <div style="display:flex;flex-direction:column;gap:16px;margin-bottom:36px;">
+        <div style="display:flex;align-items:center;gap:12px;">
+          <div style="width:32px;height:32px;border-radius:50%;background:rgba(56,199,234,0.15);display:flex;align-items:center;justify-content:center;flex-shrink:0;">
+            <svg width="14" height="14" fill="var(--primary)" viewBox="0 0 20 20"><path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd"/></svg>
+          </div>
+          <span style="color:rgba(255,255,255,0.7);font-size:14px;">Gratis &amp; vrijblijvend</span>
+        </div>
+        <div style="display:flex;align-items:center;gap:12px;">
+          <div style="width:32px;height:32px;border-radius:50%;background:rgba(56,199,234,0.15);display:flex;align-items:center;justify-content:center;flex-shrink:0;">
+            <svg width="14" height="14" fill="var(--primary)" viewBox="0 0 20 20"><path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd"/></svg>
+          </div>
+          <span style="color:rgba(255,255,255,0.7);font-size:14px;">Reactie binnen 24 uur</span>
+        </div>
+        <div style="display:flex;align-items:center;gap:12px;">
+          <div style="width:32px;height:32px;border-radius:50%;background:rgba(56,199,234,0.15);display:flex;align-items:center;justify-content:center;flex-shrink:0;">
+            <svg width="14" height="14" fill="var(--primary)" viewBox="0 0 20 20"><path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd"/></svg>
+          </div>
+          <span style="color:rgba(255,255,255,0.7);font-size:14px;">Werken met alle verzekeringen</span>
+        </div>
+        <div style="display:flex;align-items:center;gap:12px;">
+          <div style="width:32px;height:32px;border-radius:50%;background:rgba(56,199,234,0.15);display:flex;align-items:center;justify-content:center;flex-shrink:0;">
+            <svg width="14" height="14" fill="var(--primary)" viewBox="0 0 20 20"><path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd"/></svg>
+          </div>
+          <span style="color:rgba(255,255,255,0.7);font-size:14px;">OEM kwaliteitsruiten</span>
+        </div>
+      </div>
+
+      <!-- Insurer logos -->
+      <div style="padding-top:28px;border-top:1px solid rgba(255,255,255,0.08);">
+        <div style="color:rgba(255,255,255,0.35);font-size:11px;font-weight:600;letter-spacing:0.12em;text-transform:uppercase;margin-bottom:12px;">Erkend door</div>
+        <div style="display:flex;flex-wrap:wrap;gap:8px;">
+          <span style="background:rgba(255,255,255,0.07);border:1px solid rgba(255,255,255,0.1);color:rgba(255,255,255,0.6);padding:6px 14px;font-size:12px;font-weight:600;border-radius:2px;">AG Insurance</span>
+          <span style="background:rgba(255,255,255,0.07);border:1px solid rgba(255,255,255,0.1);color:rgba(255,255,255,0.6);padding:6px 14px;font-size:12px;font-weight:600;border-radius:2px;">Ethias</span>
+          <span style="background:rgba(255,255,255,0.07);border:1px solid rgba(255,255,255,0.1);color:rgba(255,255,255,0.6);padding:6px 14px;font-size:12px;font-weight:600;border-radius:2px;">KBC</span>
+          <span style="background:rgba(255,255,255,0.07);border:1px solid rgba(255,255,255,0.1);color:rgba(255,255,255,0.6);padding:6px 14px;font-size:12px;font-weight:600;border-radius:2px;">AXA</span>
+          <span style="background:rgba(255,255,255,0.07);border:1px solid rgba(255,255,255,0.1);color:rgba(255,255,255,0.6);padding:6px 14px;font-size:12px;font-weight:600;border-radius:2px;">+ meer</span>
+        </div>
+      </div>
+    </div>
+
+    <!-- Right form -->
+    <div class="reveal-right">
+      <div style="background:#fff;padding:40px;border-radius:6px;box-shadow:var(--shadow-lg);">
+        <h3 style="color:var(--dark);font-weight:800;font-size:20px;margin:0 0 28px;letter-spacing:-0.02em;">Uw gegevens</h3>
+        <form>
+          <!-- Merk + Model -->
+          <div style="display:grid;grid-template-columns:1fr 1fr;gap:14px;margin-bottom:14px;" class="form-grid">
+            <div>
+              <label style="display:block;color:var(--muted);font-size:11px;font-weight:700;letter-spacing:0.12em;text-transform:uppercase;margin-bottom:7px;">Merk</label>
+              <select style="width:100%;background:#fff;border:1.5px solid var(--border);color:var(--dark);padding:11px 14px;font-size:14px;border-radius:3px;appearance:none;">
+                <option value="">Selecteer…</option>
+                <option>Audi</option><option>BMW</option><option>Mercedes-Benz</option>
+                <option>Volkswagen</option><option>Toyota</option><option>Ford</option>
+                <option>Opel</option><option>Renault</option><option>Peugeot</option>
+                <option>Citroën</option><option>Andere</option>
+              </select>
+            </div>
+            <div>
+              <label style="display:block;color:var(--muted);font-size:11px;font-weight:700;letter-spacing:0.12em;text-transform:uppercase;margin-bottom:7px;">Model</label>
+              <input type="text" placeholder="Golf, A4, 3 Serie…" style="width:100%;background:#fff;border:1.5px solid var(--border);color:var(--dark);padding:11px 14px;font-size:14px;border-radius:3px;">
+            </div>
+          </div>
+
+          <!-- Type dienst checkboxes -->
+          <div style="margin-bottom:14px;">
+            <label style="display:block;color:var(--muted);font-size:11px;font-weight:700;letter-spacing:0.12em;text-transform:uppercase;margin-bottom:10px;">Type dienst</label>
+            <div style="display:grid;grid-template-columns:1fr 1fr;gap:8px;">
+              <label style="display:flex;align-items:center;gap:8px;cursor:pointer;font-size:13px;color:var(--dark);">
+                <input type="checkbox" style="accent-color:var(--primary);width:15px;height:15px;"> Voorruit vervangen
+              </label>
+              <label style="display:flex;align-items:center;gap:8px;cursor:pointer;font-size:13px;color:var(--dark);">
+                <input type="checkbox" style="accent-color:var(--primary);width:15px;height:15px;"> Steenslag herstellen
+              </label>
+              <label style="display:flex;align-items:center;gap:8px;cursor:pointer;font-size:13px;color:var(--dark);">
+                <input type="checkbox" style="accent-color:var(--primary);width:15px;height:15px;"> Zijruit vervangen
+              </label>
+              <label style="display:flex;align-items:center;gap:8px;cursor:pointer;font-size:13px;color:var(--dark);">
+                <input type="checkbox" style="accent-color:var(--primary);width:15px;height:15px;"> Achterruit vervangen
+              </label>
+              <label style="display:flex;align-items:center;gap:8px;cursor:pointer;font-size:13px;color:var(--dark);">
+                <input type="checkbox" style="accent-color:var(--primary);width:15px;height:15px;"> Mobiel service
+              </label>
+              <label style="display:flex;align-items:center;gap:8px;cursor:pointer;font-size:13px;color:var(--dark);">
+                <input type="checkbox" style="accent-color:var(--primary);width:15px;height:15px;"> Andere
+              </label>
+            </div>
+          </div>
+
+          <!-- Naam + Tel -->
+          <div style="display:grid;grid-template-columns:1fr 1fr;gap:14px;margin-bottom:14px;" class="form-grid">
+            <div>
+              <label style="display:block;color:var(--muted);font-size:11px;font-weight:700;letter-spacing:0.12em;text-transform:uppercase;margin-bottom:7px;">Naam</label>
+              <input type="text" placeholder="Uw naam" style="width:100%;background:#fff;border:1.5px solid var(--border);color:var(--dark);padding:11px 14px;font-size:14px;border-radius:3px;">
+            </div>
+            <div>
+              <label style="display:block;color:var(--muted);font-size:11px;font-weight:700;letter-spacing:0.12em;text-transform:uppercase;margin-bottom:7px;">Telefoon</label>
+              <input type="tel" placeholder="+32 …" style="width:100%;background:#fff;border:1.5px solid var(--border);color:var(--dark);padding:11px 14px;font-size:14px;border-radius:3px;">
+            </div>
+          </div>
+
+          <!-- Email -->
+          <div style="margin-bottom:24px;">
+            <label style="display:block;color:var(--muted);font-size:11px;font-weight:700;letter-spacing:0.12em;text-transform:uppercase;margin-bottom:7px;">E-mail</label>
+            <input type="email" placeholder="uw@email.be" style="width:100%;background:#fff;border:1.5px solid var(--border);color:var(--dark);padding:11px 14px;font-size:14px;border-radius:3px;">
+          </div>
+
+          <button type="submit" class="btn btn-primary" style="width:100%;justify-content:center;padding:16px 32px;font-size:14px;">
+            Verstuur aanvraag
+            <svg width="16" height="16" fill="none" stroke="currentColor" stroke-width="2.2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M13 7l5 5m0 0l-5 5m5-5H6"/></svg>
+          </button>
+        </form>
+      </div>
+    </div>
+  </div>
+</section>
+
+
+<!-- ═══════════════════════════════════════════
+     DIENSTEN
+═══════════════════════════════════════════ -->
+<section id="diensten" style="padding:100px 0;background:linear-gradient(170deg,#1c2c2c 0%,var(--dark) 45%,#1e3232 100%);overflow:hidden;position:relative;">
+
+  <!-- Subtle grid texture -->
+  <div style="position:absolute;inset:0;background-image:repeating-linear-gradient(0deg,transparent,transparent 40px,rgba(255,255,255,0.015) 40px,rgba(255,255,255,0.015) 41px),repeating-linear-gradient(90deg,transparent,transparent 40px,rgba(255,255,255,0.015) 40px,rgba(255,255,255,0.015) 41px);pointer-events:none;"></div>
+  <!-- Radial glow: top-center -->
+  <div style="position:absolute;top:-20%;left:50%;transform:translateX(-50%);width:800px;height:600px;border-radius:50%;background:radial-gradient(circle,rgba(56,199,234,0.09) 0%,transparent 65%);pointer-events:none;"></div>
+  <!-- Top accent line -->
+  <div style="position:absolute;top:0;left:0;right:0;height:1px;background:linear-gradient(to right,transparent,rgba(56,199,234,0.4),transparent);"></div>
+  <!-- Bottom accent line -->
+  <div style="position:absolute;bottom:0;left:0;right:0;height:1px;background:linear-gradient(to right,transparent,rgba(56,199,234,0.2),transparent);"></div>
+
+  <div style="max-width:1280px;margin:0 auto;padding:0 28px;position:relative;z-index:2;">
+
+    <!-- Header -->
+    <div style="text-align:center;margin-bottom:64px;position:relative;" class="reveal">
+      <!-- Giant ghost watermark -->
+      <div aria-hidden="true" style="position:absolute;top:50%;left:50%;transform:translate(-50%,-52%);font-family:'Archivo',sans-serif;font-size:clamp(5rem,14vw,13rem);font-weight:900;color:rgba(255,255,255,0.028);letter-spacing:-0.04em;line-height:1;pointer-events:none;white-space:nowrap;user-select:none;">DIENSTEN</div>
+      <span class="section-label" style="position:relative;z-index:1;">Wat wij doen</span>
+      <h2 style="color:#fff;font-weight:900;font-size:clamp(2.2rem,4vw,3.6rem);letter-spacing:-0.03em;line-height:1.0;margin:8px 0 16px;position:relative;z-index:1;">
+        Diensten
+        <!-- Animated underline accent -->
+        <span style="display:block;width:64px;height:3px;background:linear-gradient(to right,var(--primary),rgba(56,199,234,0.3));border-radius:2px;margin:14px auto 0;"></span>
+      </h2>
+      <p style="color:rgba(255,255,255,0.45);font-size:16px;line-height:1.75;max-width:500px;margin:0 auto;position:relative;z-index:1;">
+        Van steenslagschade tot volledige ruitvervanging — een complete service voor alle autoruiten en merken.
+      </p>
+    </div>
+
+    <!-- Cards -->
+    <div style="display:grid;grid-template-columns:repeat(3,1fr);gap:20px;" class="dienst-grid">
+
+      <div class="service-card reveal delay-1">
+        <div class="card-icon" style="margin-bottom:20px;transition:color 0.25s;">
+          <div style="width:52px;height:52px;background:rgba(56,199,234,0.12);border-radius:8px;display:flex;align-items:center;justify-content:center;margin-bottom:0;transition:background 0.25s;">
+            <svg width="26" height="26" fill="none" stroke="var(--primary)" stroke-width="1.8" viewBox="0 0 24 24"><rect x="2" y="5" width="20" height="14" rx="2"/><path stroke-linecap="round" d="M2 9h20M6 13h4M14 13h4"/></svg>
+          </div>
+        </div>
+        <h3 style="color:var(--dark);font-weight:700;font-size:17px;margin:0 0 10px;">Voorruit vervangen</h3>
+        <p style="color:var(--muted);font-size:14px;line-height:1.75;margin:0 0 18px;">Uw voorruit vervangen we snel en vakkundig met kwaliteitsruiten van erkende leveranciers.</p>
+        <a href="voorruit-vervangen.html" class="card-arrow" style="display:flex;align-items:center;gap:6px;color:var(--primary);font-size:13px;font-weight:600;text-decoration:none;">Meer info →</a>
+      </div>
+
+      <div class="service-card reveal delay-2">
+        <div style="width:52px;height:52px;background:rgba(56,199,234,0.12);border-radius:8px;display:flex;align-items:center;justify-content:center;margin-bottom:20px;transition:background 0.25s;" class="card-icon">
+          <svg width="26" height="26" fill="none" stroke="var(--primary)" stroke-width="1.8" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M15.232 5.232l3.536 3.536m-2.036-5.036a2.5 2.5 0 113.536 3.536L6.5 21.036H3v-3.572L16.732 3.732z"/></svg>
+        </div>
+        <h3 style="color:var(--dark);font-weight:700;font-size:17px;margin:0 0 10px;">Steenslag herstellen</h3>
+        <p style="color:var(--muted);font-size:14px;line-height:1.75;margin:0 0 18px;">Kleine chips en barsten herstellen we zonder vervanging — snel, discreet en bijna onzichtbaar.</p>
+        <a href="steenslag-herstellen.html" class="card-arrow" style="display:flex;align-items:center;gap:6px;color:var(--primary);font-size:13px;font-weight:600;text-decoration:none;">Meer info →</a>
+      </div>
+
+      <div class="service-card reveal delay-3">
+        <div style="width:52px;height:52px;background:var(--bg);border-radius:4px;display:flex;align-items:center;justify-content:center;margin-bottom:20px;" class="card-icon">
+          <svg width="26" height="26" fill="none" stroke="var(--primary)" stroke-width="1.8" viewBox="0 0 24 24"><rect x="3" y="3" width="7" height="18" rx="1"/><rect x="14" y="3" width="7" height="18" rx="1"/></svg>
+        </div>
+        <h3 style="color:var(--dark);font-weight:700;font-size:17px;margin:0 0 10px;">Zijruiten vervangen</h3>
+        <p style="color:var(--muted);font-size:14px;line-height:1.75;margin:0 0 18px;">Gebroken zijruit na inbraak of schade? Wij plaatsen snel een nieuwe ruit en herstellen raamsystemen.</p>
+        <a href="zijruiten-vervangen.html" class="card-arrow" style="display:flex;align-items:center;gap:6px;color:var(--primary);font-size:13px;font-weight:600;text-decoration:none;">Meer info →</a>
+      </div>
+
+      <div class="service-card reveal delay-4">
+        <div style="width:52px;height:52px;background:var(--bg);border-radius:4px;display:flex;align-items:center;justify-content:center;margin-bottom:20px;" class="card-icon">
+          <svg width="26" height="26" fill="none" stroke="var(--primary)" stroke-width="1.8" viewBox="0 0 24 24"><rect x="2" y="6" width="20" height="12" rx="2"/><path stroke-linecap="round" d="M6 10h12M6 14h8"/></svg>
+        </div>
+        <h3 style="color:var(--dark);font-weight:700;font-size:17px;margin:0 0 10px;">Achterruit vervangen</h3>
+        <p style="color:var(--muted);font-size:14px;line-height:1.75;margin:0 0 18px;">Inclusief aansluiting van verwarmingsdraad, antenne en camerasystemen — alles correct.</p>
+        <a href="achterruit-vervangen.html" class="card-arrow" style="display:flex;align-items:center;gap:6px;color:var(--primary);font-size:13px;font-weight:600;text-decoration:none;">Meer info →</a>
+      </div>
+
+      <div class="service-card reveal delay-5">
+        <div style="width:52px;height:52px;background:var(--bg);border-radius:4px;display:flex;align-items:center;justify-content:center;margin-bottom:20px;" class="card-icon">
+          <svg width="26" height="26" fill="none" stroke="var(--primary)" stroke-width="1.8" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M13 10V3L4 14h7v7l9-11h-7z"/></svg>
+        </div>
+        <h3 style="color:var(--dark);font-weight:700;font-size:17px;margin:0 0 10px;">Mobiel service</h3>
+        <p style="color:var(--muted);font-size:14px;line-height:1.75;margin:0 0 18px;">Geraakt u niet tot bij ons? Dan komen wij bij u — aan huis, op het werk of eender waar.</p>
+        <a href="mobiel-service.html" class="card-arrow" style="display:flex;align-items:center;gap:6px;color:var(--primary);font-size:13px;font-weight:600;text-decoration:none;">Meer info →</a>
+      </div>
+
+      <div class="service-card reveal delay-6">
+        <div style="width:52px;height:52px;background:var(--bg);border-radius:4px;display:flex;align-items:center;justify-content:center;margin-bottom:20px;" class="card-icon">
+          <svg width="26" height="26" fill="none" stroke="var(--primary)" stroke-width="1.8" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z"/></svg>
+        </div>
+        <h3 style="color:var(--dark);font-weight:700;font-size:17px;margin:0 0 10px;">Glasbraak verzekerd</h3>
+        <p style="color:var(--muted);font-size:14px;line-height:1.75;margin:0 0 18px;">Bent u verzekerd? Dan hoeft u niets te betalen. Wij regelen alles met uw verzekeraar.</p>
+        <a href="glasbraak-verzekerd.html" class="card-arrow" style="display:flex;align-items:center;gap:6px;color:var(--primary);font-size:13px;font-weight:600;text-decoration:none;">Meer info →</a>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+
+<!-- ═══════════════════════════════════════════
+     OVER ONS
+═══════════════════════════════════════════ -->
+<section id="over-ons" style="padding:100px 0;background:var(--surface);overflow:hidden;">
+  <div style="max-width:1280px;margin:0 auto;padding:0 28px;display:grid;grid-template-columns:1fr 1fr;gap:96px;align-items:center;" class="hero-grid">
+
+    <!-- Image -->
+    <div class="reveal-left" style="position:relative;">
+      <div style="position:relative;overflow:hidden;border-radius:4px;aspect-ratio:4/5;box-shadow:var(--shadow-lg);">
+        <img src="assets/DSC_4425.jpg" alt="Over Autoglas GT" style="width:100%;height:100%;object-fit:cover;display:block;object-position:center top;">
+        <div style="position:absolute;inset:0;background:linear-gradient(to top,rgba(54,68,67,0.3) 0%,transparent 60%);"></div>
+      </div>
+      <!-- Floating stat -->
+      <div style="position:absolute;bottom:-20px;right:-20px;background:var(--primary);color:#fff;padding:28px 32px;border-radius:4px;box-shadow:0 16px 48px rgba(56,199,234,0.35);z-index:10;">
+        <div style="font-weight:900;font-size:40px;letter-spacing:-0.04em;line-height:1;">20+</div>
+        <div style="font-size:13px;font-weight:600;opacity:0.85;margin-top:4px;">Jaar ervaring</div>
+      </div>
+      <!-- Accent bar -->
+      <div style="position:absolute;top:0;left:-12px;width:4px;height:55%;background:linear-gradient(to bottom,var(--primary),transparent);border-radius:2px;"></div>
+    </div>
+
+    <!-- Text -->
+    <div class="reveal-right">
+      <span class="section-label">Wie zijn wij</span>
+      <h2 style="color:var(--dark);font-weight:900;font-size:clamp(2rem,3.5vw,3.2rem);line-height:1.05;letter-spacing:-0.03em;margin:8px 0 20px;">Meer dan 20 jaar<br>vakmanschap</h2>
+      <p style="color:var(--muted);line-height:1.75;margin-bottom:16px;">
+        Autoglas GT is een familiebedrijf gespecialiseerd in de herstelling en vervanging van autoruiten. Met meer dan twintig jaar ervaring brengen wij elke klus vakkundig en snel tot een goed einde.
+      </p>
+      <p style="color:var(--muted);line-height:1.75;margin-bottom:24px;">
+        Wij werken met de beste materialen en houden ons aan de striktste kwaliteitsnormen. Uw veiligheid staat bij ons altijd op de eerste plaats.
+      </p>
+
+      <!-- Location block -->
+      <div style="display:flex;align-items:flex-start;gap:12px;padding:16px 20px;background:var(--bg);border:1.5px solid var(--border);border-radius:4px;margin-bottom:28px;">
+        <svg width="18" height="18" fill="var(--primary)" viewBox="0 0 20 20" style="flex-shrink:0;margin-top:2px;"><path fill-rule="evenodd" d="M5.05 4.05a7 7 0 119.9 9.9L10 18.9l-4.95-4.95a7 7 0 010-9.9zM10 11a2 2 0 100-4 2 2 0 000 4z" clip-rule="evenodd"/></svg>
+        <div>
+          <div style="color:var(--dark);font-weight:700;font-size:14px;margin-bottom:2px;">Gieterijstraat 106/A2</div>
+          <div style="color:var(--muted);font-size:13px;">3600 Genk, België</div>
+        </div>
+      </div>
+
+      <div style="display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-bottom:36px;">
+        <div style="display:flex;align-items:center;gap:12px;padding:14px 16px;border:1.5px solid var(--border);border-radius:3px;background:var(--bg);">
+          <div style="width:28px;height:28px;background:var(--primary-pale);border-radius:50%;display:flex;align-items:center;justify-content:center;flex-shrink:0;">
+            <svg width="12" height="12" fill="var(--primary)" viewBox="0 0 20 20"><path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd"/></svg>
+          </div>
+          <span style="color:var(--dark);font-size:13px;font-weight:600;">OEM kwaliteitsruiten</span>
+        </div>
+        <div style="display:flex;align-items:center;gap:12px;padding:14px 16px;border:1.5px solid var(--border);border-radius:3px;background:var(--bg);">
+          <div style="width:28px;height:28px;background:var(--primary-pale);border-radius:50%;display:flex;align-items:center;justify-content:center;flex-shrink:0;">
+            <svg width="12" height="12" fill="var(--primary)" viewBox="0 0 20 20"><path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd"/></svg>
+          </div>
+          <span style="color:var(--dark);font-size:13px;font-weight:600;">Alle merken &amp; modellen</span>
+        </div>
+        <div style="display:flex;align-items:center;gap:12px;padding:14px 16px;border:1.5px solid var(--border);border-radius:3px;background:var(--bg);">
+          <div style="width:28px;height:28px;background:var(--primary-pale);border-radius:50%;display:flex;align-items:center;justify-content:center;flex-shrink:0;">
+            <svg width="12" height="12" fill="var(--primary)" viewBox="0 0 20 20"><path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd"/></svg>
+          </div>
+          <span style="color:var(--dark);font-size:13px;font-weight:600;">Erkend technicus</span>
+        </div>
+        <div style="display:flex;align-items:center;gap:12px;padding:14px 16px;border:1.5px solid var(--border);border-radius:3px;background:var(--bg);">
+          <div style="width:28px;height:28px;background:var(--primary-pale);border-radius:50%;display:flex;align-items:center;justify-content:center;flex-shrink:0;">
+            <svg width="12" height="12" fill="var(--primary)" viewBox="0 0 20 20"><path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd"/></svg>
+          </div>
+          <span style="color:var(--dark);font-size:13px;font-weight:600;">Garantie op uw ruit</span>
+        </div>
+      </div>
+
+      <a href="#contact" class="btn btn-primary">Contacteer ons</a>
+    </div>
+  </div>
+</section>
+
+
+<!-- ═══════════════════════════════════════════
+     WERKWIJZE (dark bg)
+═══════════════════════════════════════════ -->
+<section id="werkwijze" style="padding:100px 0;background:var(--dark);overflow:hidden;position:relative;" class="lines-texture">
+  <div style="position:absolute;bottom:-200px;left:-200px;width:500px;height:500px;border-radius:50%;background:radial-gradient(circle,rgba(56,199,234,0.06) 0%,transparent 70%);pointer-events:none;"></div>
+  <div style="position:absolute;top:0;left:0;right:0;height:3px;background:linear-gradient(to right,transparent,var(--primary),transparent);opacity:0.5;"></div>
+
+  <div style="position:relative;z-index:2;max-width:1280px;margin:0 auto;padding:0 28px;">
+    <div style="text-align:center;margin-bottom:72px;" class="reveal">
+      <span class="section-label">Hoe werken wij</span>
+      <h2 style="color:#fff;font-weight:900;font-size:clamp(2.2rem,4vw,3.6rem);letter-spacing:-0.03em;line-height:1.0;margin:8px 0 16px;">Werkwijze</h2>
+      <p style="color:rgba(255,255,255,0.45);font-size:16px;line-height:1.75;max-width:440px;margin:0 auto;">In vier stappen vakkundig geholpen — eenvoudig, snel, zonder verrassingen.</p>
+    </div>
+
+    <div style="display:grid;grid-template-columns:repeat(4,1fr);gap:40px;position:relative;" class="steps-grid">
+      <!-- connector lines -->
+      <div style="position:absolute;top:20px;left:calc(12.5% + 20px);right:calc(12.5% + 20px);height:1px;background:linear-gradient(to right,rgba(56,199,234,0.4),rgba(56,199,234,0.1));z-index:0;" class="md-hidden"></div>
+
+      <div class="reveal delay-1" style="position:relative;z-index:1;">
+        <div style="width:40px;height:40px;border-radius:50%;background:var(--primary);display:flex;align-items:center;justify-content:center;margin-bottom:20px;font-weight:900;font-size:14px;color:#fff;letter-spacing:-0.02em;">01</div>
+        <div style="width:36px;height:2px;background:var(--primary);margin-bottom:16px;border-radius:1px;"></div>
+        <h3 style="color:#fff;font-weight:700;font-size:17px;margin:0 0 10px;">Contacteer ons</h3>
+        <p style="color:rgba(255,255,255,0.45);font-size:14px;line-height:1.75;margin:0;">Bel ons of vul het offerteformulier in. Wij reageren snel.</p>
+      </div>
+      <div class="reveal delay-2" style="position:relative;z-index:1;">
+        <div style="width:40px;height:40px;border-radius:50%;background:rgba(56,199,234,0.15);border:2px solid rgba(56,199,234,0.4);display:flex;align-items:center;justify-content:center;margin-bottom:20px;font-weight:900;font-size:14px;color:var(--primary);">02</div>
+        <div style="width:36px;height:2px;background:rgba(56,199,234,0.3);margin-bottom:16px;border-radius:1px;"></div>
+        <h3 style="color:#fff;font-weight:700;font-size:17px;margin:0 0 10px;">Offerte op maat</h3>
+        <p style="color:rgba(255,255,255,0.45);font-size:14px;line-height:1.75;margin:0;">Transparante offerte zonder verborgen kosten of verrassingen.</p>
+      </div>
+      <div class="reveal delay-3" style="position:relative;z-index:1;">
+        <div style="width:40px;height:40px;border-radius:50%;background:rgba(56,199,234,0.15);border:2px solid rgba(56,199,234,0.4);display:flex;align-items:center;justify-content:center;margin-bottom:20px;font-weight:900;font-size:14px;color:var(--primary);">03</div>
+        <div style="width:36px;height:2px;background:rgba(56,199,234,0.3);margin-bottom:16px;border-radius:1px;"></div>
+        <h3 style="color:#fff;font-weight:700;font-size:17px;margin:0 0 10px;">Afspraak inplannen</h3>
+        <p style="color:rgba(255,255,255,0.45);font-size:14px;line-height:1.75;margin:0;">Op uw locatie of in onze werkplaats — u kiest wat past.</p>
+      </div>
+      <div class="reveal delay-4" style="position:relative;z-index:1;">
+        <div style="width:40px;height:40px;border-radius:50%;background:rgba(56,199,234,0.15);border:2px solid rgba(56,199,234,0.4);display:flex;align-items:center;justify-content:center;margin-bottom:20px;font-weight:900;font-size:14px;color:var(--primary);">04</div>
+        <div style="width:36px;height:2px;background:rgba(56,199,234,0.3);margin-bottom:16px;border-radius:1px;"></div>
+        <h3 style="color:#fff;font-weight:700;font-size:17px;margin:0 0 10px;">Klaar voor de weg</h3>
+        <p style="color:rgba(255,255,255,0.45);font-size:14px;line-height:1.75;margin:0;">Uw ruit wordt vakkundig geplaatst. U rijdt veilig weg!</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+
+<!-- ═══════════════════════════════════════════
+     CTA BANNER
+═══════════════════════════════════════════ -->
+<section style="padding:80px 0;background:var(--primary);overflow:hidden;position:relative;">
+  <div style="position:absolute;inset:0;opacity:0.08;background-image:repeating-linear-gradient(45deg,transparent,transparent 2px,#fff 2px,#fff 4px);"></div>
+  <div style="position:relative;z-index:2;max-width:1280px;margin:0 auto;padding:0 28px;display:flex;align-items:center;justify-content:space-between;gap:32px;flex-wrap:wrap;">
+    <div class="reveal-left">
+      <h2 style="color:#fff;font-weight:900;font-size:clamp(1.8rem,3vw,2.8rem);letter-spacing:-0.03em;margin:0 0 8px;">Steenslagschade? Bel ons vandaag.</h2>
+      <p style="color:rgba(255,255,255,0.75);font-size:16px;margin:0;">Wij herstellen of vervangen uw ruit zo snel mogelijk.</p>
+    </div>
+    <div class="reveal-right" style="display:flex;gap:14px;flex-wrap:wrap;">
+      <a href="tel:+32495100881" class="btn btn-white">
+        <svg width="16" height="16" fill="var(--dark)" viewBox="0 0 20 20"><path d="M2 3a1 1 0 011-1h2.153a1 1 0 01.986.836l.74 4.435a1 1 0 01-.54 1.06l-1.548.773a11.037 11.037 0 006.105 6.105l.774-1.548a1 1 0 011.059-.54l4.435.74a1 1 0 01.836.986V17a1 1 0 01-1 1h-2C7.82 18 2 12.18 2 5V3z"/></svg>
+        +32 495 10 08 81
+      </a>
+      <a href="#offerte" style="display:inline-flex;align-items:center;gap:8px;background:rgba(255,255,255,0.15);color:#fff;padding:14px 28px;font-weight:700;font-size:13px;text-transform:uppercase;letter-spacing:0.1em;text-decoration:none;border:2px solid rgba(255,255,255,0.4);transition:background 0.2s ease;border-radius:0;" onmouseover="this.style.background='rgba(255,255,255,0.25)'" onmouseout="this.style.background='rgba(255,255,255,0.15)'">
+        Offerte aanvragen →
+      </a>
+    </div>
+  </div>
+</section>
+
+
+<!-- ═══════════════════════════════════════════
+     FOOTER
+═══════════════════════════════════════════ -->
+<footer id="contact" style="background:var(--dark-deeper);padding-top:80px;padding-bottom:40px;">
+  <div style="max-width:1280px;margin:0 auto;padding:0 28px;">
+    <div style="display:grid;grid-template-columns:2fr 1fr 1fr;gap:64px;margin-bottom:64px;padding-bottom:64px;border-bottom:1px solid rgba(255,255,255,0.07);" class="footer-grid">
+
+      <!-- Col 1 -->
+      <div>
+        <!-- Logo -->
+        <a href="index.html" style="display:inline-block;margin-bottom:20px;text-decoration:none;">
+          <img src="Logo_Autoglasgt.jpg" alt="Autoglas GT" style="height:52px;width:auto;display:block;border-radius:8px;box-shadow:0 4px 16px rgba(0,0,0,0.3);">
+        </a>
+        <p style="color:rgba(255,255,255,0.4);font-size:14px;line-height:1.75;max-width:280px;margin-bottom:28px;">
+          Uw specialist voor autoruiten. Kwaliteit, snelheid en eerlijke prijzen staan centraal bij alles wat wij doen.
+        </p>
+        <ul style="list-style:none;padding:0;margin:0 0 28px;display:flex;flex-direction:column;gap:12px;">
+          <li>
+            <a href="tel:+32495100881" style="display:flex;align-items:center;gap:10px;color:rgba(255,255,255,0.5);font-size:14px;text-decoration:none;transition:color 0.2s;" onmouseover="this.style.color='var(--primary)'" onmouseout="this.style.color='rgba(255,255,255,0.5)'">
+              <svg width="15" height="15" fill="var(--primary)" viewBox="0 0 20 20"><path d="M2 3a1 1 0 011-1h2.153a1 1 0 01.986.836l.74 4.435a1 1 0 01-.54 1.06l-1.548.773a11.037 11.037 0 006.105 6.105l.774-1.548a1 1 0 011.059-.54l4.435.74a1 1 0 01.836.986V17a1 1 0 01-1 1h-2C7.82 18 2 12.18 2 5V3z"/></svg>
+              +32 495 10 08 81
+            </a>
+          </li>
+          <li>
+            <a href="mailto:info@autoglasgt.be" style="display:flex;align-items:center;gap:10px;color:rgba(255,255,255,0.5);font-size:14px;text-decoration:none;transition:color 0.2s;" onmouseover="this.style.color='var(--primary)'" onmouseout="this.style.color='rgba(255,255,255,0.5)'">
+              <svg width="15" height="15" fill="var(--primary)" viewBox="0 0 20 20"><path d="M2.003 5.884L10 9.882l7.997-3.998A2 2 0 0016 4H4a2 2 0 00-1.997 1.884z"/><path d="M18 8.118l-8 4-8-4V14a2 2 0 002 2h12a2 2 0 002-2V8.118z"/></svg>
+              info@autoglasgt.be
+            </a>
+          </li>
+          <li style="display:flex;align-items:flex-start;gap:10px;color:rgba(255,255,255,0.5);font-size:14px;">
+            <svg width="15" height="15" fill="var(--primary)" viewBox="0 0 20 20" style="margin-top:3px;flex-shrink:0;"><path fill-rule="evenodd" d="M5.05 4.05a7 7 0 119.9 9.9L10 18.9l-4.95-4.95a7 7 0 010-9.9zM10 11a2 2 0 100-4 2 2 0 000 4z" clip-rule="evenodd"/></svg>
+            Gieterijstraat 106/A2, 3600 Genk
+          </li>
+        </ul>
+        <!-- Socials -->
+        <div style="display:flex;gap:10px;">
+          <a href="#" style="width:36px;height:36px;border:1px solid rgba(255,255,255,0.12);border-radius:3px;display:flex;align-items:center;justify-content:center;color:rgba(255,255,255,0.4);text-decoration:none;transition:border-color 0.2s,color 0.2s;" onmouseover="this.style.borderColor='var(--primary)';this.style.color='var(--primary)'" onmouseout="this.style.borderColor='rgba(255,255,255,0.12)';this.style.color='rgba(255,255,255,0.4)'">
+            <svg width="15" height="15" fill="currentColor" viewBox="0 0 24 24"><path d="M24 12.073c0-6.627-5.373-12-12-12s-12 5.373-12 12c0 5.99 4.388 10.954 10.125 11.854v-8.385H7.078v-3.47h3.047V9.43c0-3.007 1.792-4.669 4.533-4.669 1.312 0 2.686.235 2.686.235v2.953H15.83c-1.491 0-1.956.925-1.956 1.874v2.25h3.328l-.532 3.47h-2.796v8.385C19.612 23.027 24 18.062 24 12.073z"/></svg>
+          </a>
+          <a href="#" style="width:36px;height:36px;border:1px solid rgba(255,255,255,0.12);border-radius:3px;display:flex;align-items:center;justify-content:center;color:rgba(255,255,255,0.4);text-decoration:none;transition:border-color 0.2s,color 0.2s;" onmouseover="this.style.borderColor='var(--primary)';this.style.color='var(--primary)'" onmouseout="this.style.borderColor='rgba(255,255,255,0.12)';this.style.color='rgba(255,255,255,0.4)'">
+            <svg width="15" height="15" fill="currentColor" viewBox="0 0 24 24"><path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zm0-2.163c-3.259 0-3.667.014-4.947.072-4.358.2-6.78 2.618-6.98 6.98-.059 1.281-.073 1.689-.073 4.948 0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98 1.281.058 1.689.072 4.948.072 3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98-1.281-.059-1.69-.073-4.949-.073zm0 5.838c-3.403 0-6.162 2.759-6.162 6.162s2.759 6.163 6.162 6.163 6.162-2.759 6.162-6.163c0-3.403-2.759-6.162-6.162-6.162zm0 10.162c-2.209 0-4-1.79-4-4 0-2.209 1.791-4 4-4s4 1.791 4 4c0 2.21-1.791 4-4 4zm6.406-11.845c-.796 0-1.441.645-1.441 1.44s.645 1.44 1.441 1.44c.795 0 1.439-.645 1.439-1.44s-.644-1.44-1.439-1.44z"/></svg>
+          </a>
+        </div>
+      </div>
+
+      <!-- Col 2 -->
+      <div>
+        <h4 style="color:#fff;font-weight:700;font-size:12px;letter-spacing:0.12em;text-transform:uppercase;margin-bottom:20px;">Diensten</h4>
+        <ul style="list-style:none;padding:0;margin:0;display:flex;flex-direction:column;gap:11px;">
+          <li><a href="voorruit-vervangen.html" style="color:rgba(255,255,255,0.45);font-size:14px;text-decoration:none;transition:color 0.2s;" onmouseover="this.style.color='var(--primary)'" onmouseout="this.style.color='rgba(255,255,255,0.45)'">Voorruit vervangen</a></li>
+          <li><a href="steenslag-herstellen.html" style="color:rgba(255,255,255,0.45);font-size:14px;text-decoration:none;transition:color 0.2s;" onmouseover="this.style.color='var(--primary)'" onmouseout="this.style.color='rgba(255,255,255,0.45)'">Steenslag herstellen</a></li>
+          <li><a href="zijruiten-vervangen.html" style="color:rgba(255,255,255,0.45);font-size:14px;text-decoration:none;transition:color 0.2s;" onmouseover="this.style.color='var(--primary)'" onmouseout="this.style.color='rgba(255,255,255,0.45)'">Zijruiten vervangen</a></li>
+          <li><a href="achterruit-vervangen.html" style="color:rgba(255,255,255,0.45);font-size:14px;text-decoration:none;transition:color 0.2s;" onmouseover="this.style.color='var(--primary)'" onmouseout="this.style.color='rgba(255,255,255,0.45)'">Achterruit vervangen</a></li>
+          <li><a href="mobiel-service.html" style="color:rgba(255,255,255,0.45);font-size:14px;text-decoration:none;transition:color 0.2s;" onmouseover="this.style.color='var(--primary)'" onmouseout="this.style.color='rgba(255,255,255,0.45)'">Mobiel service</a></li>
+          <li><a href="glasbraak-verzekerd.html" style="color:rgba(255,255,255,0.45);font-size:14px;text-decoration:none;transition:color 0.2s;" onmouseover="this.style.color='var(--primary)'" onmouseout="this.style.color='rgba(255,255,255,0.45)'">Glasbraak verzekerd</a></li>
+        </ul>
+      </div>
+
+      <!-- Col 3 -->
+      <div>
+        <h4 style="color:#fff;font-weight:700;font-size:12px;letter-spacing:0.12em;text-transform:uppercase;margin-bottom:20px;">Navigatie</h4>
+        <ul style="list-style:none;padding:0;margin:0;display:flex;flex-direction:column;gap:11px;">
+          <li><a href="#top" style="color:rgba(255,255,255,0.45);font-size:14px;text-decoration:none;transition:color 0.2s;" onmouseover="this.style.color='var(--primary)'" onmouseout="this.style.color='rgba(255,255,255,0.45)'">Home</a></li>
+          <li><a href="#over-ons" style="color:rgba(255,255,255,0.45);font-size:14px;text-decoration:none;transition:color 0.2s;" onmouseover="this.style.color='var(--primary)'" onmouseout="this.style.color='rgba(255,255,255,0.45)'">Over ons</a></li>
+          <li><a href="#werkwijze" style="color:rgba(255,255,255,0.45);font-size:14px;text-decoration:none;transition:color 0.2s;" onmouseover="this.style.color='var(--primary)'" onmouseout="this.style.color='rgba(255,255,255,0.45)'">Werkwijze</a></li>
+          <li><a href="#offerte" style="color:rgba(255,255,255,0.45);font-size:14px;text-decoration:none;transition:color 0.2s;" onmouseover="this.style.color='var(--primary)'" onmouseout="this.style.color='rgba(255,255,255,0.45)'">Offerte aanvragen</a></li>
+          <li><a href="#contact" style="color:rgba(255,255,255,0.45);font-size:14px;text-decoration:none;transition:color 0.2s;" onmouseover="this.style.color='var(--primary)'" onmouseout="this.style.color='rgba(255,255,255,0.45)'">Contact</a></li>
+        </ul>
+      </div>
+    </div>
+
+    <div style="display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:16px;">
+      <p style="color:rgba(255,255,255,0.25);font-size:12px;margin:0;">© 2026 Autoglas GT. Alle rechten voorbehouden.</p>
+      <div style="display:flex;gap:20px;">
+        <a href="#" style="color:rgba(255,255,255,0.25);font-size:12px;text-decoration:none;transition:color 0.2s;" onmouseover="this.style.color='var(--primary)'" onmouseout="this.style.color='rgba(255,255,255,0.25)'">Privacybeleid</a>
+        <a href="#" style="color:rgba(255,255,255,0.25);font-size:12px;text-decoration:none;transition:color 0.2s;" onmouseover="this.style.color='var(--primary)'" onmouseout="this.style.color='rgba(255,255,255,0.25)'">Algemene voorwaarden</a>
+      </div>
+    </div>
+  </div>
+</footer>
+
+
+<!-- ═══════════════════════════════════════════
+     JAVASCRIPT — Scroll reveals + Counter
+═══════════════════════════════════════════ -->
+<script>
+  // ── Scroll reveal ──────────────────────────
+  const revealEls = document.querySelectorAll('.reveal, .reveal-left, .reveal-right');
+  const revealObserver = new IntersectionObserver((entries) => {
+    entries.forEach(entry => {
+      if (entry.isIntersecting) {
+        entry.target.classList.add('visible');
+        revealObserver.unobserve(entry.target);
+      }
+    });
+  }, { threshold: 0.12, rootMargin: '0px 0px -40px 0px' });
+  revealEls.forEach(el => revealObserver.observe(el));
+
+  // ── Counter animation ──────────────────────
+  function animateCounter(el) {
+    const target = parseInt(el.dataset.target, 10);
+    const duration = 1600;
+    const startTime = performance.now();
+    function tick(now) {
+      const elapsed = now - startTime;
+      const progress = Math.min(elapsed / duration, 1);
+      // ease-out cubic
+      const eased = 1 - Math.pow(1 - progress, 3);
+      el.textContent = Math.floor(eased * target);
+      if (progress < 1) requestAnimationFrame(tick);
+      else el.textContent = target;
+    }
+    requestAnimationFrame(tick);
+  }
+
+  const counterObserver = new IntersectionObserver((entries) => {
+    entries.forEach(entry => {
+      if (entry.isIntersecting) {
+        animateCounter(entry.target);
+        counterObserver.unobserve(entry.target);
+      }
+    });
+  }, { threshold: 0.5 });
+  document.querySelectorAll('.counter').forEach(el => counterObserver.observe(el));
+
+  // ── Smooth active nav highlight ────────────
+  const sections = document.querySelectorAll('section[id], footer[id]');
+  const navLinks = document.querySelectorAll('.nav-link');
+  window.addEventListener('scroll', () => {
+    let current = '';
+    sections.forEach(s => {
+      if (window.scrollY >= s.offsetTop - 120) current = s.id;
+    });
+    navLinks.forEach(a => {
+      a.style.color = a.getAttribute('href') === '#' + current ? 'var(--primary)' : '';
+    });
+  }, { passive: true });
+</script>
+
+</body>
+</html>
