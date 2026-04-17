@@ -298,6 +298,19 @@
       .dienst-grid { grid-template-columns: 1fr !important; }
       .steps-grid  { grid-template-columns: 1fr 1fr !important; }
       .footer-grid { grid-template-columns: 1fr !important; }
+
+      /* Hamburger */
+      #ham-btn { display: flex !important; }
+
+      /* Hero: collapse SVG wrapper, let text flow naturally */
+      #windshield-wrap { padding-bottom: 0 !important; filter: none !important; }
+      #ws-bg, #crack-svg { display: none !important; }
+      .ws-hero-body { position: relative !important; height: auto !important; padding: 28px 0 32px !important; }
+      .ws-hero-text { padding: 0 20px !important; width: 100% !important; }
+
+      /* USP banner: 2-col grid, dividers hidden */
+      .usp-inner { display: grid !important; grid-template-columns: 1fr 1fr; gap: 16px 8px !important; align-items: start; }
+      .usp-divider { display: none !important; }
     }
   </style>
 </head>
@@ -336,6 +349,21 @@
           <div style="font-size:13px;color:var(--dark);font-weight:700;line-height:1.3;">+32 495 10 08 81</div>
         </div>
       </a>
+
+      <!-- Hamburger (mobile only) -->
+      <button id="ham-btn" aria-label="Menu openen" onclick="(function(){var m=document.getElementById('mob-nav');m.style.display=m.style.display==='none'?'block':'none';})()" style="display:none;flex-shrink:0;align-items:center;justify-content:center;background:transparent;border:none;padding:8px;border-radius:8px;cursor:pointer;position:relative;z-index:1;">
+        <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="var(--dark)" stroke-width="2.2" stroke-linecap="round">
+          <line x1="3" y1="6" x2="21" y2="6"/><line x1="3" y1="12" x2="21" y2="12"/><line x1="3" y1="18" x2="21" y2="18"/>
+        </svg>
+      </button>
+    </div>
+
+    <!-- Mobile nav dropdown -->
+    <div id="mob-nav" style="display:none;padding:8px 16px 16px;border-top:1px solid rgba(255,255,255,0.4);position:relative;z-index:1;">
+      <a href="#diensten" class="liq-nav-link" onclick="document.getElementById('mob-nav').style.display='none'" style="display:block;padding:12px 14px;font-size:14px;">Diensten</a>
+      <a href="#over-ons" class="liq-nav-link" onclick="document.getElementById('mob-nav').style.display='none'" style="display:block;padding:12px 14px;font-size:14px;">Over ons</a>
+      <a href="#werkwijze" class="liq-nav-link" onclick="document.getElementById('mob-nav').style.display='none'" style="display:block;padding:12px 14px;font-size:14px;">Werkwijze</a>
+      <a href="#contact" class="liq-nav-link" onclick="document.getElementById('mob-nav').style.display='none'" style="display:block;padding:12px 14px;font-size:14px;">Contact</a>
     </div>
   </div>
 </header>
@@ -560,9 +588,9 @@
         </svg>
 
         <!-- 3 ── Content inside windshield ──────────────────── -->
-        <div style="position:absolute;top:0;left:0;width:100%;height:100%;display:flex;align-items:center;">
+        <div class="ws-hero-body" style="position:absolute;top:0;left:0;width:100%;height:100%;display:flex;align-items:center;">
           <!-- Text occupies left ~55%, crack zone on the right -->
-          <div style="padding:7% 42% 7% 7%;width:100%;">
+          <div class="ws-hero-text" style="padding:7% 42% 7% 7%;width:100%;">
 
             <span class="reveal" style="display:inline-block;margin-bottom:12px;font-size:11px;font-weight:700;letter-spacing:0.18em;text-transform:uppercase;color:var(--primary);text-shadow:0 1px 8px rgba(0,0,0,0.7);">Specialist in autoruiten</span>
 
@@ -589,8 +617,7 @@
             </div>
 
             <div class="reveal delay-4" style="display:flex;gap:8px;margin-top:18px;flex-wrap:wrap;">
-              <div style="background:var(--primary);color:#fff;padding:5px 12px;border-radius:8px;font-size:10px;font-weight:700;letter-spacing:0.12em;text-transform:uppercase;box-shadow:0 4px 14px rgba(56,199,234,0.35);">Gratis offerte</div>
-              <div style="background:rgba(255,255,255,0.12);color:rgba(255,255,255,0.9);padding:5px 12px;border-radius:8px;font-size:10px;font-weight:700;letter-spacing:0.08em;text-transform:uppercase;border:1px solid rgba(255,255,255,0.22);backdrop-filter:blur(8px);">Alle verzekeringen</div>
+                           <div style="background:rgba(255,255,255,0.12);color:rgba(255,255,255,0.9);padding:5px 12px;border-radius:8px;font-size:10px;font-weight:700;letter-spacing:0.08em;text-transform:uppercase;border:1px solid rgba(255,255,255,0.22);backdrop-filter:blur(8px);">Alle verzekeringen</div>
             </div>
           </div>
         </div>
@@ -605,7 +632,7 @@
         <div style="color:rgba(255,255,255,0.4);font-size:12px;margin-top:2px;">Tevreden klanten</div>
       </div>
       <div style="padding:20px 24px;border-right:1px solid rgba(255,255,255,0.10);border-bottom:1px solid rgba(255,255,255,0.10);">
-        <div style="color:#fff;font-weight:900;font-size:30px;letter-spacing:-0.04em;line-height:1;" class="counter" data-target="20">0</div>
+        <div style="color:#fff;font-weight:900;font-size:30px;letter-spacing:-0.04em;line-height:1;" class="counter" data-target="30">0</div>
         <div style="color:var(--primary);font-size:10px;font-weight:700;letter-spacing:0.1em;text-transform:uppercase;margin-top:3px;">+ jaar</div>
         <div style="color:rgba(255,255,255,0.4);font-size:12px;margin-top:2px;">Ervaring</div>
       </div>
@@ -698,27 +725,27 @@
      USP BANNER
 ═══════════════════════════════════════════ -->
 <div style="background:var(--bg);border-top:1px solid var(--border);border-bottom:1px solid var(--border);padding:20px 28px;overflow:hidden;">
-  <div style="max-width:1280px;margin:0 auto;display:flex;align-items:center;justify-content:space-between;gap:24px;flex-wrap:wrap;">
+  <div class="usp-inner" style="max-width:1280px;margin:0 auto;display:flex;align-items:center;justify-content:space-between;gap:24px;flex-wrap:wrap;">
     <div style="display:flex;align-items:center;gap:10px;">
       <svg width="20" height="20" fill="var(--primary)" viewBox="0 0 20 20"><path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd"/></svg>
       <span style="font-size:14px;font-weight:600;color:var(--dark);">Gratis & vrijblijvend</span>
     </div>
-    <div style="width:1px;height:24px;background:var(--border);"></div>
+    <div class="usp-divider" style="width:1px;height:24px;background:var(--border);"></div>
     <div style="display:flex;align-items:center;gap:10px;">
       <svg width="20" height="20" fill="var(--primary)" viewBox="0 0 20 20"><path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd"/></svg>
       <span style="font-size:14px;font-weight:600;color:var(--dark);">Reactie binnen 24 uur</span>
     </div>
-    <div style="width:1px;height:24px;background:var(--border);"></div>
+    <div class="usp-divider" style="width:1px;height:24px;background:var(--border);"></div>
     <div style="display:flex;align-items:center;gap:10px;">
       <svg width="20" height="20" fill="var(--primary)" viewBox="0 0 20 20"><path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd"/></svg>
       <span style="font-size:14px;font-weight:600;color:var(--dark);">Erkend door alle verzekeraars</span>
     </div>
-    <div style="width:1px;height:24px;background:var(--border);"></div>
+    <div class="usp-divider" style="width:1px;height:24px;background:var(--border);"></div>
     <div style="display:flex;align-items:center;gap:10px;">
       <svg width="20" height="20" fill="var(--primary)" viewBox="0 0 20 20"><path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd"/></svg>
       <span style="font-size:14px;font-weight:600;color:var(--dark);">OEM kwaliteitsruiten</span>
     </div>
-    <div style="width:1px;height:24px;background:var(--border);"></div>
+    <div class="usp-divider" style="width:1px;height:24px;background:var(--border);"></div>
     <div style="display:flex;align-items:center;gap:10px;">
       <svg width="20" height="20" fill="var(--primary)" viewBox="0 0 20 20"><path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd"/></svg>
       <span style="font-size:14px;font-weight:600;color:var(--dark);">Alle merken &amp; modellen</span>
@@ -769,7 +796,7 @@
           <div style="width:32px;height:32px;border-radius:50%;background:rgba(56,199,234,0.15);display:flex;align-items:center;justify-content:center;flex-shrink:0;">
             <svg width="14" height="14" fill="var(--primary)" viewBox="0 0 20 20"><path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd"/></svg>
           </div>
-          <span style="color:rgba(255,255,255,0.7);font-size:14px;">OEM kwaliteitsruiten</span>
+          <span style="color:rgba(255,255,255,0.7);font-size:14px;">kwaliteitsruiten</span>
         </div>
       </div>
 
@@ -972,7 +999,7 @@
       </div>
       <!-- Floating stat -->
       <div style="position:absolute;bottom:-20px;right:-20px;background:var(--primary);color:#fff;padding:28px 32px;border-radius:4px;box-shadow:0 16px 48px rgba(56,199,234,0.35);z-index:10;">
-        <div style="font-weight:900;font-size:40px;letter-spacing:-0.04em;line-height:1;">20+</div>
+        <div style="font-weight:900;font-size:40px;letter-spacing:-0.04em;line-height:1;">30+</div>
         <div style="font-size:13px;font-weight:600;opacity:0.85;margin-top:4px;">Jaar ervaring</div>
       </div>
       <!-- Accent bar -->
@@ -982,7 +1009,7 @@
     <!-- Text -->
     <div class="reveal-right">
       <span class="section-label">Wie zijn wij</span>
-      <h2 style="color:var(--dark);font-weight:900;font-size:clamp(2rem,3.5vw,3.2rem);line-height:1.05;letter-spacing:-0.03em;margin:8px 0 20px;">Meer dan 20 jaar<br>vakmanschap</h2>
+      <h2 style="color:var(--dark);font-weight:900;font-size:clamp(2rem,3.5vw,3.2rem);line-height:1.05;letter-spacing:-0.03em;margin:8px 0 20px;">Meer dan 30 jaar<br>vakmanschap</h2>
       <p style="color:var(--muted);line-height:1.75;margin-bottom:16px;">
         Autoglas GT is een familiebedrijf gespecialiseerd in de herstelling en vervanging van autoruiten. Met meer dan twintig jaar ervaring brengen wij elke klus vakkundig en snel tot een goed einde.
       </p>
@@ -1004,7 +1031,7 @@
           <div style="width:28px;height:28px;background:var(--primary-pale);border-radius:50%;display:flex;align-items:center;justify-content:center;flex-shrink:0;">
             <svg width="12" height="12" fill="var(--primary)" viewBox="0 0 20 20"><path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd"/></svg>
           </div>
-          <span style="color:var(--dark);font-size:13px;font-weight:600;">OEM kwaliteitsruiten</span>
+          <span style="color:var(--dark);font-size:13px;font-weight:600;">kwaliteitsruiten</span>
         </div>
         <div style="display:flex;align-items:center;gap:12px;padding:14px 16px;border:1.5px solid var(--border);border-radius:3px;background:var(--bg);">
           <div style="width:28px;height:28px;background:var(--primary-pale);border-radius:50%;display:flex;align-items:center;justify-content:center;flex-shrink:0;">

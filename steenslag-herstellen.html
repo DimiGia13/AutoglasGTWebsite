@@ -62,6 +62,18 @@
       letter-spacing: 0.14em; text-transform: uppercase; color: var(--primary);
       background: var(--primary-pale); padding: 5px 12px; border-radius: 2px; margin-bottom: 12px;
     }
+
+    /* ── Mobile ─────────────────────────────── */
+    @media (max-width: 768px) {
+      #ham-btn { display: flex !important; }
+      .mob-nav-hidden { display: none !important; }
+      .service-main-grid { grid-template-columns: 1fr !important; gap: 40px !important; }
+      .stk-outer { height: 280px !important; }
+      .stk-stage { width: 300px !important; height: 240px !important; }
+      .stk-card  { width: 280px !important; height: 220px !important; margin-top: -110px !important; margin-left: -140px !important; }
+      .other-grid { grid-template-columns: 1fr !important; }
+      .service-footer-inner { flex-direction: column !important; align-items: flex-start !important; gap: 12px !important; }
+    }
   </style>
 </head>
 <body>
@@ -72,7 +84,7 @@
       <a href="index.html" style="text-decoration:none;display:flex;align-items:center;flex-shrink:0;">
         <img src="Logo_Autoglasgt.jpg" alt="Autoglas GT" style="height:58px;width:auto;display:block;border-radius:6px;">
       </a>
-      <nav style="display:flex;align-items:center;gap:4px;">
+      <nav class="mob-nav-hidden" style="display:flex;align-items:center;gap:4px;">
         <a href="index.html#diensten" class="liq-nav-link">Diensten</a>
         <a href="index.html#over-ons" class="liq-nav-link">Over ons</a>
         <a href="index.html#werkwijze" class="liq-nav-link">Werkwijze</a>
@@ -80,8 +92,21 @@
       </nav>
       <a href="tel:+32495100881" style="display:inline-flex;align-items:center;gap:7px;background:var(--primary);color:#fff;padding:8px 16px;font-size:12.5px;font-weight:700;letter-spacing:0.06em;text-decoration:none;border-radius:10px;flex-shrink:0;position:relative;z-index:1;transition:opacity 0.2s;" onmouseover="this.style.opacity='0.85'" onmouseout="this.style.opacity='1'">
         <svg width="13" height="13" fill="currentColor" viewBox="0 0 20 20"><path d="M2 3a1 1 0 011-1h2.153a1 1 0 01.986.836l.74 4.435a1 1 0 01-.54 1.06l-1.548.773a11.037 11.037 0 006.105 6.105l.774-1.548a1 1 0 011.059-.54l4.435.74a1 1 0 01.836.986V17a1 1 0 01-1 1h-2C7.82 18 2 12.18 2 5V3z"/></svg>
-        +32 495 10 08 81
-      </a>
+        +32 495 10 08 81</a>
+      <!-- Hamburger (mobile only) -->
+      <button id="ham-btn" aria-label="Menu openen" onclick="(function(){var m=document.getElementById('mob-nav');m.style.display=m.style.display==='none'?'block':'none';})()" style="display:none;flex-shrink:0;align-items:center;justify-content:center;background:transparent;border:none;padding:8px;border-radius:8px;cursor:pointer;position:relative;z-index:1;">
+        <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="var(--dark)" stroke-width="2.2" stroke-linecap="round">
+          <line x1="3" y1="6" x2="21" y2="6"/><line x1="3" y1="12" x2="21" y2="12"/><line x1="3" y1="18" x2="21" y2="18"/>
+        </svg>
+      </button>
+    </div>
+
+    <!-- Mobile nav dropdown -->
+    <div id="mob-nav" style="display:none;padding:8px 16px 16px;border-top:1px solid rgba(255,255,255,0.4);position:relative;z-index:1;">
+      <a href="index.html#diensten" class="liq-nav-link" onclick="document.getElementById('mob-nav').style.display='none'" style="display:block;padding:12px 14px;font-size:14px;">Diensten</a>
+      <a href="index.html#over-ons" class="liq-nav-link" onclick="document.getElementById('mob-nav').style.display='none'" style="display:block;padding:12px 14px;font-size:14px;">Over ons</a>
+      <a href="index.html#werkwijze" class="liq-nav-link" onclick="document.getElementById('mob-nav').style.display='none'" style="display:block;padding:12px 14px;font-size:14px;">Werkwijze</a>
+      <a href="index.html#contact" class="liq-nav-link" onclick="document.getElementById('mob-nav').style.display='none'" style="display:block;padding:12px 14px;font-size:14px;">Contact</a>
     </div>
   </div>
 </header>
@@ -103,7 +128,7 @@
 </section>
 
 <section style="padding:80px 0;background:var(--surface);">
-  <div style="max-width:1280px;margin:0 auto;padding:0 28px;display:grid;grid-template-columns:1fr 1fr;gap:80px;align-items:start;">
+  <div class="service-main-grid" style="max-width:1280px;margin:0 auto;padding:0 28px;display:grid;grid-template-columns:1fr 1fr;gap:80px;align-items:start;">
     <div>
       <h2 style="color:var(--dark);font-weight:800;font-size:clamp(1.6rem,2.5vw,2.2rem);letter-spacing:-0.02em;margin-bottom:20px;">Steenslag herstellen zonder vervanging</h2>
       <p style="color:var(--muted);line-height:1.8;font-size:15px;margin-bottom:20px;">
@@ -142,7 +167,7 @@
       </a>
     </div>
 
-    <div style="position:relative;width:100%;height:680px;overflow:hidden;display:flex;align-items:center;justify-content:center;user-select:none;">
+    <div class="stk-outer" style="position:relative;width:100%;height:680px;overflow:hidden;display:flex;align-items:center;justify-content:center;user-select:none;">
       <div style="position:absolute;left:0;top:50%;transform:translateY(-50%);text-align:center;pointer-events:none;z-index:10;">
         <div class="stk-cur" style="font-size:1.9rem;font-weight:300;color:var(--dark);line-height:1;font-variant-numeric:tabular-nums;">01</div>
         <div style="width:24px;height:1px;background:rgba(54,68,67,0.15);margin:7px auto;"></div>
@@ -158,7 +183,7 @@
 <section style="padding:80px 0;background:var(--bg);">
   <div style="max-width:1280px;margin:0 auto;padding:0 28px;">
     <h2 style="color:var(--dark);font-weight:800;font-size:22px;margin-bottom:32px;">Andere diensten</h2>
-    <div style="display:grid;grid-template-columns:repeat(3,1fr);gap:16px;">
+    <div class="other-grid" style="display:grid;grid-template-columns:repeat(3,1fr);gap:16px;">
       <a href="voorruit-vervangen.html" style="background:var(--surface);padding:24px;border-radius:4px;border:1.5px solid var(--border);text-decoration:none;transition:border-color 0.2s;" onmouseover="this.style.borderColor='var(--primary)'" onmouseout="this.style.borderColor='var(--border)'">
         <div style="color:var(--dark);font-weight:700;font-size:15px;margin-bottom:6px;">Voorruit vervangen</div>
         <div style="color:var(--muted);font-size:13px;line-height:1.6;">Snel en vakkundig met kwaliteitsruiten.</div>
@@ -176,7 +201,7 @@
 </section>
 
 <footer style="background:var(--dark-deeper);padding:40px 0;">
-  <div style="max-width:1280px;margin:0 auto;padding:0 28px;display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:20px;">
+  <div class="service-footer-inner" style="max-width:1280px;margin:0 auto;padding:0 28px;display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:20px;">
     <div style="display:flex;align-items:center;gap:8px;">
       <div style="width:28px;height:28px;background:var(--primary);border-radius:3px;display:flex;align-items:center;justify-content:center;">
         <svg width="15" height="15" fill="none" stroke="#fff" stroke-width="2.2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M3 9l2-5h14l2 5M3 9v8a1 1 0 001 1h16a1 1 0 001-1V9M3 9h18"/></svg>
