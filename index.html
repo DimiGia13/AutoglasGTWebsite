@@ -759,7 +759,7 @@
     <div class="usp-divider" style="width:1px;height:24px;background:var(--border);"></div>
     <div style="display:flex;align-items:center;gap:10px;">
       <svg width="20" height="20" fill="var(--primary)" viewBox="0 0 20 20"><path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd"/></svg>
-      <span style="font-size:14px;font-weight:600;color:var(--dark);">OEM kwaliteitsruiten</span>
+      <span style="font-size:14px;font-weight:600;color:var(--dark);">kwaliteitsruiten</span>
     </div>
     <div class="usp-divider" style="width:1px;height:24px;background:var(--border);"></div>
     <div style="display:flex;align-items:center;gap:10px;">
@@ -833,12 +833,12 @@
     <div class="reveal-right">
       <div style="background:#fff;padding:40px;border-radius:6px;box-shadow:var(--shadow-lg);">
         <h3 style="color:var(--dark);font-weight:800;font-size:20px;margin:0 0 28px;letter-spacing:-0.02em;">Uw gegevens</h3>
-        <form>
+        <form id="contact-form">
           <!-- Merk + Model -->
           <div style="display:grid;grid-template-columns:1fr 1fr;gap:14px;margin-bottom:14px;" class="form-grid">
             <div>
               <label style="display:block;color:var(--muted);font-size:11px;font-weight:700;letter-spacing:0.12em;text-transform:uppercase;margin-bottom:7px;">Merk</label>
-              <select style="width:100%;background:#fff;border:1.5px solid var(--border);color:var(--dark);padding:11px 14px;font-size:14px;border-radius:3px;appearance:none;">
+              <select name="merk" style="width:100%;background:#fff;border:1.5px solid var(--border);color:var(--dark);padding:11px 14px;font-size:14px;border-radius:3px;appearance:none;">
                 <option value="">Selecteer…</option>
                 <option>Audi</option><option>BMW</option><option>Mercedes-Benz</option>
                 <option>Volkswagen</option><option>Toyota</option><option>Ford</option>
@@ -848,7 +848,19 @@
             </div>
             <div>
               <label style="display:block;color:var(--muted);font-size:11px;font-weight:700;letter-spacing:0.12em;text-transform:uppercase;margin-bottom:7px;">Model</label>
-              <input type="text" placeholder="Golf, A4, 3 Serie…" style="width:100%;background:#fff;border:1.5px solid var(--border);color:var(--dark);padding:11px 14px;font-size:14px;border-radius:3px;">
+              <input type="text" name="model" placeholder="Golf, A4, 3 Serie…" style="width:100%;background:#fff;border:1.5px solid var(--border);color:var(--dark);padding:11px 14px;font-size:14px;border-radius:3px;">
+            </div>
+          </div>
+
+          <!-- Bouwjaar + Chassisnummer -->
+          <div style="display:grid;grid-template-columns:1fr 1fr;gap:14px;margin-bottom:14px;" class="form-grid">
+            <div>
+              <label style="display:block;color:var(--muted);font-size:11px;font-weight:700;letter-spacing:0.12em;text-transform:uppercase;margin-bottom:7px;">Bouwjaar <span style="color:#e53e3e;">*</span></label>
+              <input type="number" name="bouwjaar" placeholder="2018" min="1970" max="2026" required style="width:100%;background:#fff;border:1.5px solid var(--border);color:var(--dark);padding:11px 14px;font-size:14px;border-radius:3px;">
+            </div>
+            <div>
+              <label style="display:block;color:var(--muted);font-size:11px;font-weight:700;letter-spacing:0.12em;text-transform:uppercase;margin-bottom:7px;">Chassisnummer <span style="color:#e53e3e;">*</span></label>
+              <input type="text" name="chassisnummer" placeholder="WBA3A5G5XDNN12345" maxlength="17" required style="width:100%;background:#fff;border:1.5px solid var(--border);color:var(--dark);padding:11px 14px;font-size:14px;border-radius:3px;letter-spacing:0.05em;">
             </div>
           </div>
 
@@ -857,22 +869,38 @@
             <label style="display:block;color:var(--muted);font-size:11px;font-weight:700;letter-spacing:0.12em;text-transform:uppercase;margin-bottom:10px;">Type dienst</label>
             <div style="display:grid;grid-template-columns:1fr 1fr;gap:8px;">
               <label style="display:flex;align-items:center;gap:8px;cursor:pointer;font-size:13px;color:var(--dark);">
-                <input type="checkbox" style="accent-color:var(--primary);width:15px;height:15px;"> Voorruit vervangen
+                <input type="checkbox" name="dienst" value="Voorruit vervangen" style="accent-color:var(--primary);width:15px;height:15px;"> Voorruit vervangen
               </label>
               <label style="display:flex;align-items:center;gap:8px;cursor:pointer;font-size:13px;color:var(--dark);">
-                <input type="checkbox" style="accent-color:var(--primary);width:15px;height:15px;"> Steenslag herstellen
+                <input type="checkbox" name="dienst" value="Steenslag herstellen" style="accent-color:var(--primary);width:15px;height:15px;"> Steenslag herstellen
               </label>
               <label style="display:flex;align-items:center;gap:8px;cursor:pointer;font-size:13px;color:var(--dark);">
-                <input type="checkbox" style="accent-color:var(--primary);width:15px;height:15px;"> Zijruit vervangen
+                <input type="checkbox" name="dienst" value="Zijruit vervangen" style="accent-color:var(--primary);width:15px;height:15px;"> Zijruit vervangen
               </label>
               <label style="display:flex;align-items:center;gap:8px;cursor:pointer;font-size:13px;color:var(--dark);">
-                <input type="checkbox" style="accent-color:var(--primary);width:15px;height:15px;"> Achterruit vervangen
+                <input type="checkbox" name="dienst" value="Achterruit vervangen" style="accent-color:var(--primary);width:15px;height:15px;"> Achterruit vervangen
               </label>
               <label style="display:flex;align-items:center;gap:8px;cursor:pointer;font-size:13px;color:var(--dark);">
-                <input type="checkbox" style="accent-color:var(--primary);width:15px;height:15px;"> Mobiel service
+                <input type="checkbox" name="dienst" value="Mobiel service" style="accent-color:var(--primary);width:15px;height:15px;"> Mobiel service
               </label>
               <label style="display:flex;align-items:center;gap:8px;cursor:pointer;font-size:13px;color:var(--dark);">
-                <input type="checkbox" style="accent-color:var(--primary);width:15px;height:15px;"> Andere
+                <input type="checkbox" name="dienst" value="Andere" style="accent-color:var(--primary);width:15px;height:15px;"> Andere
+              </label>
+            </div>
+          </div>
+
+          <!-- Verzekerd -->
+          <div style="margin-bottom:14px;">
+            <label style="display:block;color:var(--muted);font-size:11px;font-weight:700;letter-spacing:0.12em;text-transform:uppercase;margin-bottom:10px;">Verzekerd?</label>
+            <div style="display:flex;gap:20px;">
+              <label style="display:flex;align-items:center;gap:8px;cursor:pointer;font-size:13px;color:var(--dark);">
+                <input type="radio" name="verzekerd" value="Ja" style="accent-color:var(--primary);width:15px;height:15px;"> Ja
+              </label>
+              <label style="display:flex;align-items:center;gap:8px;cursor:pointer;font-size:13px;color:var(--dark);">
+                <input type="radio" name="verzekerd" value="Nee" style="accent-color:var(--primary);width:15px;height:15px;"> Nee
+              </label>
+              <label style="display:flex;align-items:center;gap:8px;cursor:pointer;font-size:13px;color:var(--dark);">
+                <input type="radio" name="verzekerd" value="Weet ik niet" style="accent-color:var(--primary);width:15px;height:15px;"> Weet ik niet
               </label>
             </div>
           </div>
@@ -881,25 +909,53 @@
           <div style="display:grid;grid-template-columns:1fr 1fr;gap:14px;margin-bottom:14px;" class="form-grid">
             <div>
               <label style="display:block;color:var(--muted);font-size:11px;font-weight:700;letter-spacing:0.12em;text-transform:uppercase;margin-bottom:7px;">Naam</label>
-              <input type="text" placeholder="Uw naam" style="width:100%;background:#fff;border:1.5px solid var(--border);color:var(--dark);padding:11px 14px;font-size:14px;border-radius:3px;">
+              <input type="text" name="naam" placeholder="Uw naam" style="width:100%;background:#fff;border:1.5px solid var(--border);color:var(--dark);padding:11px 14px;font-size:14px;border-radius:3px;">
             </div>
             <div>
               <label style="display:block;color:var(--muted);font-size:11px;font-weight:700;letter-spacing:0.12em;text-transform:uppercase;margin-bottom:7px;">Telefoon</label>
-              <input type="tel" placeholder="+32 …" style="width:100%;background:#fff;border:1.5px solid var(--border);color:var(--dark);padding:11px 14px;font-size:14px;border-radius:3px;">
+              <input type="tel" name="telefoon" placeholder="+32 …" style="width:100%;background:#fff;border:1.5px solid var(--border);color:var(--dark);padding:11px 14px;font-size:14px;border-radius:3px;">
             </div>
           </div>
 
           <!-- Email -->
-          <div style="margin-bottom:24px;">
+          <div style="margin-bottom:14px;">
             <label style="display:block;color:var(--muted);font-size:11px;font-weight:700;letter-spacing:0.12em;text-transform:uppercase;margin-bottom:7px;">E-mail</label>
-            <input type="email" placeholder="uw@email.be" style="width:100%;background:#fff;border:1.5px solid var(--border);color:var(--dark);padding:11px 14px;font-size:14px;border-radius:3px;">
+            <input type="email" name="email" placeholder="E-mail" style="width:100%;background:#fff;border:1.5px solid var(--border);color:var(--dark);padding:11px 14px;font-size:14px;border-radius:3px;">
           </div>
 
-          <button type="submit" class="btn btn-primary" style="width:100%;justify-content:center;padding:16px 32px;font-size:14px;">
+          <!-- Foto uploaden -->
+          <div style="margin-bottom:14px;">
+            <label style="display:block;color:var(--muted);font-size:11px;font-weight:700;letter-spacing:0.12em;text-transform:uppercase;margin-bottom:7px;">Foto schade</label>
+            <label id="foto-label" style="display:flex;align-items:center;gap:12px;border:1.5px dashed var(--border);border-radius:3px;padding:14px 16px;cursor:pointer;transition:border-color 0.2s;" onmouseover="this.style.borderColor='var(--primary)'" onmouseout="this.style.borderColor='var(--border)'">
+              <svg width="20" height="20" fill="none" stroke="var(--muted)" stroke-width="1.8" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M4 16l4-4a3 3 0 014.24 0L16 16m-2-2l1.586-1.586a2 2 0 012.828 0L20 14M6 20h12a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2 2v12a2 2 0 002 2zM8 10a2 2 0 110-4 2 2 0 010 4z"/></svg>
+              <span id="foto-label-text" style="font-size:13px;color:var(--muted);">Klik om foto te selecteren (jpg, png, max 5 MB)</span>
+              <input type="file" name="foto" id="foto-input" accept="image/*" style="display:none;" onchange="document.getElementById('foto-label-text').textContent=this.files[0]?this.files[0].name:'Klik om foto te selecteren (jpg, png, max 5 MB)'">
+            </label>
+          </div>
+
+          <!-- Opmerking -->
+          <div style="margin-bottom:24px;">
+            <label style="display:block;color:var(--muted);font-size:11px;font-weight:700;letter-spacing:0.12em;text-transform:uppercase;margin-bottom:7px;">Opmerking</label>
+            <textarea name="opmerking" placeholder="Extra informatie, vragen of opmerkingen…" rows="4" style="width:100%;background:#fff;border:1.5px solid var(--border);color:var(--dark);padding:11px 14px;font-size:14px;border-radius:3px;resize:vertical;font-family:inherit;line-height:1.6;"></textarea>
+          </div>
+
+          <div id="form-error" style="display:none;background:#fee2e2;color:#991b1b;padding:12px 16px;border-radius:3px;font-size:13px;margin-bottom:16px;">
+            Er is iets misgegaan. Probeer opnieuw of bel ons op <strong>+32 498 82 19 06</strong>.
+          </div>
+
+          <button type="submit" id="form-submit-btn" class="btn btn-primary" style="width:100%;justify-content:center;padding:16px 32px;font-size:14px;">
             Verstuur aanvraag
-            <svg width="16" height="16" fill="none" stroke="currentColor" stroke-width="2.2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M13 7l5 5m0 0l-5 5m5-5H6"/></svg>
+            <svg id="form-btn-arrow" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2.2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M13 7l5 5m0 0l-5 5m5-5H6"/></svg>
+            <svg id="form-btn-spinner" style="display:none;animation:spin 0.8s linear infinite;" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2.2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M12 2v4m0 12v4M4.93 4.93l2.83 2.83m8.48 8.48l2.83 2.83M2 12h4m12 0h4M4.93 19.07l2.83-2.83m8.48-8.48l2.83-2.83"/></svg>
           </button>
         </form>
+        <div id="form-success" style="display:none;text-align:center;padding:40px 20px;">
+          <div style="width:56px;height:56px;background:var(--primary);border-radius:50%;display:flex;align-items:center;justify-content:center;margin:0 auto 20px;">
+            <svg width="24" height="24" fill="none" stroke="#fff" stroke-width="2.5" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M5 13l4 4L19 7"/></svg>
+          </div>
+          <h4 style="color:var(--dark);font-size:18px;font-weight:800;margin:0 0 8px;">Aanvraag verstuurd!</h4>
+          <p style="color:var(--muted);font-size:14px;line-height:1.6;margin:0;">We nemen zo snel mogelijk contact met u op.</p>
+        </div>
       </div>
     </div>
   </div>
@@ -1280,6 +1336,58 @@
     });
   }, { passive: true });
 </script>
+
+<!-- ── Contact form submission ─────────────────────────────── -->
+<script>
+  (function () {
+    const FORMSPREE_ID = 'xyklaado';
+
+    const form = document.getElementById('contact-form');
+    const successBox = document.getElementById('form-success');
+    const errorBox = document.getElementById('form-error');
+    const submitBtn = document.getElementById('form-submit-btn');
+    const btnArrow = document.getElementById('form-btn-arrow');
+    const btnSpinner = document.getElementById('form-btn-spinner');
+
+    if (!form) return;
+
+    form.addEventListener('submit', async function (e) {
+      e.preventDefault();
+      errorBox.style.display = 'none';
+
+      submitBtn.disabled = true;
+      btnArrow.style.display = 'none';
+      btnSpinner.style.display = 'inline';
+      submitBtn.childNodes[0].textContent = ' Bezig met versturen…';
+
+      try {
+        const res = await fetch('https://formspree.io/f/' + FORMSPREE_ID, {
+          method: 'POST',
+          body: new FormData(form),
+          headers: { 'Accept': 'application/json' }
+        });
+
+        if (res.ok) {
+          form.style.display = 'none';
+          successBox.style.display = 'block';
+        } else {
+          throw new Error('server error');
+        }
+      } catch (_) {
+        errorBox.style.display = 'block';
+        submitBtn.disabled = false;
+        btnArrow.style.display = 'inline';
+        btnSpinner.style.display = 'none';
+        submitBtn.childNodes[0].textContent = ' Verstuur aanvraag';
+      }
+    });
+  })();
+</script>
+
+<!-- spinner keyframes -->
+<style>
+  @keyframes spin { to { transform: rotate(360deg); } }
+</style>
 
 </body>
 </html>
