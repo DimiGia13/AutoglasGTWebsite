@@ -318,11 +318,13 @@
       /* Hamburger */
       #ham-btn { display: flex !important; }
 
-      /* Hero: collapse SVG wrapper, let text flow naturally */
-      #windshield-wrap { padding-bottom: 0 !important; filter: none !important; }
-      #ws-bg, #crack-svg { display: none !important; }
-      .ws-hero-body { position: relative !important; height: auto !important; padding: 28px 0 32px !important; }
-      .ws-hero-text { padding: 0 20px !important; width: 100% !important; }
+      /* Hero: show windshield on mobile, adapted aspect ratio */
+      #windshield-wrap { padding-bottom: 82% !important; filter: drop-shadow(0 10px 24px rgba(20,40,40,0.25)) !important; }
+      .ws-hero-body { position: absolute !important; height: 100% !important; padding: 0 !important; }
+      .ws-hero-text { padding: 8% 5% 5% 6% !important; width: 100% !important; }
+      /* Hide paragraph and tag badge inside windshield to keep mobile layout clean */
+      .ws-hero-text .reveal.delay-2 { display: none !important; }
+      .ws-hero-text .reveal.delay-4 { display: none !important; }
 
       /* USP banner: 2-col grid, dividers hidden */
       .usp-inner { display: grid !important; grid-template-columns: 1fr 1fr; gap: 16px 8px !important; align-items: start; }
